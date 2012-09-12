@@ -81,7 +81,7 @@ def main():
         for row in reader:
             data.append(row)
 
-        for row in data[1:1]:
+        for row in data[1:2]:
 	    user = User.objects.get(username=args.user)
 	    activity = Activity()
 	    category = Category()
