@@ -1,11 +1,11 @@
 BEGIN;
 DROP TABLE `logbook_settings`;
+DROP TABLE `logbook_activitydata`;
+DROP TABLE `logbook_activity`;
+DROP TABLE `logbook_category`;
 DROP TABLE `logbook_equipmentdata`;
 DROP TABLE `logbook_equipment`;
 DROP TABLE `logbook_userdata`;
-DROP TABLE `logbook_activitydata`;
-DROP TABLE `logbook_activity`;
 DROP TABLE `logbook_location`;
-DROP TABLE `logbook_category`;
 DROP TABLE `logbook_subcategory`;
 COMMIT;
