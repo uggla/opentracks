@@ -90,7 +90,7 @@ class Activity(models.Model):
     category = models.ForeignKey(Category,blank = True, null = True)
     location = models.ForeignKey(Location,blank = True, null = True)
     equipment = models.ForeignKey(Equipment,blank = True, null = True)
-    datetime = models.DateTimeField(_('published'))
+    datetime = models.DateTimeField(_('activity start time', db_index = True))
     climbed = models.FloatField(default='0')
     descended = models.FloatField(default='0')
     paused = models.TimeField(default='00:00:00')
@@ -108,6 +108,8 @@ class Activity(models.Model):
     notes = models.TextField(blank = True, null = True)
     linkto = models.URLField(blank = True, null = True)
     public = models.BooleanField()
+    removepeak = models.BooleanField(default='0')
+    smoothing = models.IntegerField(blank = True, null = True)
     
     def subcat(self):
         return self.category.subcategory.name
@@ -131,15 +133,16 @@ class Activity(models.Model):
 # cadence (rpm)
 # power (W)
 class ActivityData(models.Model):
-    activity = models.ForeignKey(Activity)
+    activity = models.ForeignKey(Activity, db_index = True)
+    datetime = models.DateTimeField(_('point timestamp'))
     lap = models.IntegerField(blank = True, null = True)
     distance = models.FloatField()
     elevation = models.FloatField()
     lat = models.FloatField()
     lon = models.FloatField()
-    grade = models.FloatField()
-    duration = models.TimeField()
-    speed = models.FloatField()
+    #grade = models.FloatField()
+    #duration = models.TimeField()
+    #speed = models.FloatField()
     heartrate = models.IntegerField(blank = True, null = True)
     cadence = models.FloatField(blank = True, null = True)
     power = models.FloatField(blank = True, null = True)
