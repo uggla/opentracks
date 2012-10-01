@@ -16,7 +16,7 @@ from ConfigParser import RawConfigParser
 import argparse
 import csv
 from datetime import datetime, date, time, tzinfo, timedelta
-from pytz import timezone
+from pytz import timezone, all_timezones
 import pytz
 from dateutil.parser import *
 
@@ -53,11 +53,11 @@ def main():
     def checkfield(value):
         test = re.search('ignore', value, re.I)
         if test is not None:
-            return 0
+            return False
         if (value == ''):
-            return 0
+            return False
 
-        return 1
+        return True
             
     def import_activitydata():
         activitydata = ActivityData()
@@ -73,15 +73,16 @@ def main():
         #activitydata.duration = row[config.getfield('duration')]
         #activitydata.speed = row[config.getfield('speed')]
         if ( checkfield(row[config.getfield('heartrate')]) ) :
-            activitydata.heartrate = row[config.getfield('heartrate')]
+            activitydata.heartrate = round_int(float(row[config.getfield('heartrate')]))
         if ( checkfield(row[config.getfield('cadence')]) ) :
             activitydata.cadence = row[config.getfield('cadence')]
         if ( checkfield(row[config.getfield('power')]) ) :
             activitydata.power = row[config.getfield('power')]
+
         if not ( activitydata.distance == ''  and
-             activitydata.elevation == '' and
-             activitydata.lat == '' and
-             activitydata.lon == ''):
+                 activitydata.elevation == '' and
+                 activitydata.lat == '' and
+                 activitydata.lon == ''):
             activitydata.save()
         del activitydata
 
@@ -90,7 +91,20 @@ def main():
         timestamp = mytz.localize(timestamp)
         timestamp = timestamp.astimezone(utc)
         return timestamp
+
+    def convert_duration(value):
+        timestamp = parse(value)
+        timestamp = timestamp.time()
+        return timestamp
+
+    def round_int(value):
+        return int(round(value))
         
+    def show_timezones():
+        for zone in all_timezones:
+            print zone
+        sys.exit(0)
+
 
     print application + ' ' + version
     print
@@ -102,36 +116,35 @@ def main():
 
     argparser = argparse.ArgumentParser(description='Import csv data.')
 
-    argparser.add_argument('user', help='user name')
-    argparser.add_argument('timezone', help='timezone')
+    argparser.add_argument('user', help='user name to bind data')
+    argparser.add_argument('timezone', help='timezone used to import data')
     argparser.add_argument('filename', help='csv filename to import')
+    argparser.add_argument('--timezone', help='show available timezone',
+                           action='store_true', dest='tzavail')
+    argparser.add_argument('--force_new', help='Force to add an activity even if already in the DB. This is used mainly for debugging purpose',
+                           action='store_true', dest='fnew')
 
-    # argparser.add_argument('-v', '--verbose', dest='verbose',
-    #                    action='store_true',
-    #                    help='verbose output, print output fron par2 and unrar'
-    #                    )
-
-    # argparser.add_argument('-t', '--test', dest='test', action='store_true'
-    #                    , help='do not extract file only verify them')
-
-    # argparser.add_argument('-c', '--curse', dest='curse',
-    #                    action='store_true',
-    #                    help='use curses Text User Interface')
 
     args = argparser.parse_args()
-
+    
     config = ImportConfFile()
     config.read(cfgfile)
 
+    # Show timezone if required
+    if ( args.tzavail == True ):
+        show_timezones()
+
+    # Check user
     try:
         user = User.objects.get(username=args.user)
+        print 'User : ' + user.username
     except:
         sys.stderr.write('User does not exist.\n')
         sys.exit(1)
 
     try:
         mytz = timezone(args.timezone)
-        print mytz.zone
+        print 'Timezone for data : ' + mytz.zone
     except:
         sys.stderr.write('Unknown timezone.\n')
         sys.exit(1)
@@ -158,6 +171,8 @@ def main():
             except:
                 category.name = row[config.getfield('subcategory')]
                 category.save()
+                print 'Category imported.'
+                print 'No subcategory found'
         else:
 
             try:
@@ -166,6 +181,7 @@ def main():
             except:
                 subcategory.name = row[config.getfield('subcategory')]
                 subcategory.save()
+                print 'Subcategory imported.'
 
             try:
                 category = \
@@ -174,6 +190,7 @@ def main():
                 category.name = row[config.getfield('category')]
                 category.subcategory = subcategory
                 category.save()
+                print 'Category imported.'
 
         # Import location
 
@@ -183,6 +200,7 @@ def main():
         except:
             location.name = row[config.getfield('location')]
             location.save()
+            print 'Location imported.'
 
         # Import equipment
 
@@ -193,6 +211,7 @@ def main():
             equipment.name = row[config.getfield('equipment')]
             equipment.user = user
             equipment.save()
+            print 'Equipement imported.'
 
         # Import activity
 
@@ -202,22 +221,45 @@ def main():
         activity.equipment = equipment
 
         activity.datetime = convert_utc(row[config.getfield('datetime')])
+        # Check if an activity with same timestamp already exist
+        if not ( args.fnew == True ):
+            try:
+                existing_activity = Activity.objects.get(datetime = activity.datetime)
+            except:
+                sys.stderr.write('An existing activity is available with timestamp : ')
+                sys.stderr.write(activity.datetime.isoformat())
+                sys.stderr.write('\n')
+                sys.exit(1)
 
         activity.climbed = row[config.getfield('climbed')]
         activity.descended = row[config.getfield('descend')]
-        activity.paused = time(12, 30)
+        activity.paused = convert_duration (row[config.getfield('paused')])
 
         activity.averagespeed = row[config.getfield('averagespeed')]
         activity.maxspeed = row[config.getfield('maxspeed')]
         activity.calories = row[config.getfield('calories')]
 
-        activity.averageheartrate = row[config.getfield('averageheartrate')]
-        activity.maxheartrate = row[config.getfield('maxheartrate')]
+        if ( checkfield(row[config.getfield('averageheartrate')]) ) :
+            activity.averageheartrate = row[config.getfield('averageheartrate')]
+        if ( checkfield(row[config.getfield('maxheartrate')]) ) :
+            activity.maxheartrate = row[config.getfield('maxheartrate')]
+        if ( checkfield(row[config.getfield('averagecadence')]) ) :
+            activity.averagecadence = row[config.getfield('averagecadence')]
+        if ( checkfield(row[config.getfield('maxcadence')]) ) :
+            activity.maxcadence = row[config.getfield('maxcadence')]
+        if ( checkfield(row[config.getfield('averagepower')]) ) :
+            activity.averagepower = row[config.getfield('averagepower')]
+        if ( checkfield(row[config.getfield('maxpower')]) ) :
+            activity.maxpower = row[config.getfield('maxpower')]
+        if ( checkfield(row[config.getfield('temperature')]) ) :
+            activity.temperature = row[config.getfield('temperature')]
+        if ( checkfield(row[config.getfield('weather')]) ) :
+            activity.weather = row[config.getfield('weather')]
+        if ( checkfield(row[config.getfield('notes')]) ) :
+            activity.notes = row[config.getfield('notes')]
 
-        # Still missing fields
-
-        activity.public = False
         activity.save()
+        print 'Activity imported.'
 
 
         # Import activitydata from first line
@@ -231,6 +273,7 @@ def main():
             break
         import_activitydata()
         
+    print 'ActivityData imported.'
 
 # Main
 # =====

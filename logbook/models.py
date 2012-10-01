@@ -107,7 +107,7 @@ class Activity(models.Model):
     weather = models.CharField(max_length=100,blank = True, null = True)
     notes = models.TextField(blank = True, null = True)
     linkto = models.URLField(blank = True, null = True)
-    public = models.BooleanField()
+    public = models.BooleanField(default='0')
     removepeak = models.BooleanField(default='0')
     smoothing = models.IntegerField(blank = True, null = True)
     
