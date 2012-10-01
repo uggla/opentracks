@@ -137,7 +137,7 @@ class ActivityData(models.Model):
     datetime = models.DateTimeField(_('point timestamp'))
     lap = models.IntegerField(blank = True, null = True)
     distance = models.FloatField()
-    elevation = models.FloatField()
+    elevation = models.FloatField(blank = True, null = True)
     lat = models.FloatField()
     lon = models.FloatField()
     #grade = models.FloatField()

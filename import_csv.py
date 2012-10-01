@@ -66,7 +66,8 @@ def main():
         if ( checkfield(row[config.getfield('lap')]) ) :
             activitydata.lap = row[config.getfield('lap')]
         activitydata.distance = row[config.getfield('distance')]
-        activitydata.elevation = row[config.getfield('elevation')]
+        if ( checkfield(row[config.getfield('elevation')]) ) :
+            activitydata.elevation = row[config.getfield('elevation')]
         activitydata.lat = row[config.getfield('lat')]
         activitydata.lon = row[config.getfield('lon')]
         #activitydata.grade = row[config.getfield('grade')]
@@ -79,9 +80,8 @@ def main():
         if ( checkfield(row[config.getfield('power')]) ) :
             activitydata.power = row[config.getfield('power')]
 
-        if not ( activitydata.distance == ''  and
-                 activitydata.elevation == '' and
-                 activitydata.lat == '' and
+        if not ( activitydata.distance == ''  or
+                 activitydata.lat == '' or
                  activitydata.lon == ''):
             activitydata.save()
         del activitydata
@@ -223,14 +223,13 @@ def main():
         activity.datetime = convert_utc(row[config.getfield('datetime')])
         # Check if an activity with same timestamp already exist
         if not ( args.fnew == True ):
-            try:
-                existing_activity = Activity.objects.get(datetime = activity.datetime)
-            except:
-                sys.stderr.write('An existing activity is available with timestamp : ')
+            existing_activity = Activity.objects.filter(datetime = activity.datetime)
+            if not ( len(existing_activity) == 0):
+                sys.stderr.write('One or several existing activity is available with timestamp : ')
                 sys.stderr.write(activity.datetime.isoformat())
                 sys.stderr.write('\n')
                 sys.exit(1)
-
+ 
         activity.climbed = row[config.getfield('climbed')]
         activity.descended = row[config.getfield('descend')]
         activity.paused = convert_duration (row[config.getfield('paused')])
