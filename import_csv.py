@@ -236,7 +236,7 @@ def main():
 
         activity.averagespeed = row[config.getfield('averagespeed')]
         activity.maxspeed = row[config.getfield('maxspeed')]
-        activity.calories = row[config.getfield('calories')]
+        activity.calories = round_int(float(row[config.getfield('calories')]))
 
         if ( checkfield(row[config.getfield('averageheartrate')]) ) :
             activity.averageheartrate = row[config.getfield('averageheartrate')]
