@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.db.models.query import QuerySet
+
 
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
@@ -111,6 +113,8 @@ class Activity(models.Model):
     removepeak = models.BooleanField(default='0')
     smoothing = models.IntegerField(blank = True, null = True)
     
+    points = QuerySet()
+
     def subcat(self):
         return self.category.subcategory.name
     subcat.admin_order_field = 'subcategory'
@@ -118,6 +122,17 @@ class Activity(models.Model):
     #def __unicode__(self):
     #    return self.datetime
 
+    @staticmethod
+    def get_id(req_id):
+        return Activity.objects.get(pk = req_id)
+
+
+    def loaddata(self):
+        self.points = ActivityData.objects.filter(activity = self.pk)
+
+    def start(self):
+        self.loaddata();
+        return {'lat' : self.points[0].lat, 'lon' : self.points[0].lon}
 
 # Table ActivityData
 # activity (FK)
