@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.db.models.query import QuerySet
+from datetime import datetime, date, time, tzinfo, timedelta
 
 
 from django.contrib.auth.models import User
@@ -113,7 +114,8 @@ class Activity(models.Model):
     removepeak = models.BooleanField(default='0')
     smoothing = models.IntegerField(blank = True, null = True)
     
-    points = QuerySet()
+    trackpoints = QuerySet()
+    __dataloaded=False
 
     def subcat(self):
         return self.category.subcategory.name
@@ -128,11 +130,42 @@ class Activity(models.Model):
 
 
     def loaddata(self):
-        self.points = ActivityData.objects.filter(activity = self.pk)
+        self.trackpoints = ActivityData.objects.filter(activity = self.pk)
+        self.__dataloaded=True
 
     def start(self):
-        self.loaddata();
-        return {'lat' : self.points[0].lat, 'lon' : self.points[0].lon}
+        if (self.__dataloaded==False):
+            self.loaddata()
+        return {'lat' : self.trackpoints[0].lat, 'lon' : self.trackpoints[0].lon}
+
+    def speed(self):
+        speed=list()
+        if (self.__dataloaded==False):
+            self.loaddata()
+        for i in range(1,self.trackpoints.count()):
+            deltadist=self.trackpoints[i].distance - self.trackpoints[i-1].distance
+            deltatime=self.trackpoints[i].datetime - self.trackpoints[i-1].datetime
+            speed.append((deltadist / deltatime.total_seconds()) * 3600)
+        return speed
+
+    def maxspeed(self):
+        speed = self.speed()
+        return max(speed)
+        
+    def averagespeed(self):
+        elementsum = 0.0
+        speed = self.speed()
+        nb_elements = len(speed)
+        for i in speed:
+            elementsum+=i    
+        return elementsum/nb_elements
+
+    def elapsedtime(self):
+        if (self.__dataloaded==False):
+            self.loaddata()
+        i = len(self.trackpoints)-1
+        return self.trackpoints[i].datetime - self.trackpoints[0].datetime
+        
 
 # Table ActivityData
 # activity (FK)
