@@ -2,6 +2,7 @@
 # Django settings for opentracks project.
 
 from os.path import dirname, join, abspath
+from django.utils.translation import gettext_lazy as _
 
 OPENTRACKS_ROOT = dirname(abspath(__file__))
 
@@ -51,12 +52,12 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = join (OPENTRACKS_ROOT,"media")
+MEDIA_ROOT = join (OPENTRACKS_ROOT,"media_site")
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = 'http://127.0.0.1:8000/media/'
+MEDIA_URL = 'http://127.0.0.1:8000/s_media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -93,15 +94,31 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+)
+
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+INTERNAL_IPS = ('127.0.0.1',)
+
 
 ROOT_URLCONF = 'opentracks.urls'
 
@@ -125,6 +142,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'debug_toolbar',
     'logbook',
 )
 
@@ -156,3 +174,15 @@ LOGGING = {
         },
     }
 }
+
+
+LOCALE_PATHS = (
+    '/home/ctb/django/opentracks/opentracks/locale',
+)
+
+
+LANGUAGES = (
+    ('fr', _('Français')),
+    ('en', _('Anglais')),
+)
+DEFAULT_LANGUAGE = 1

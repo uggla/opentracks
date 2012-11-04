@@ -160,7 +160,7 @@ class Activity(models.Model):
             elementsum+=i    
         return elementsum/nb_elements
 
-    def elapsedtime(self):
+    def duration(self):
         if (self.__dataloaded==False):
             self.loaddata()
         i = len(self.trackpoints)-1
