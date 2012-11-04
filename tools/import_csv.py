@@ -20,11 +20,6 @@ from pytz import timezone, all_timezones
 import pytz
 from dateutil.parser import *
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
-from django.core.management import execute_from_command_line
-from ot_logbook.models import Activity, Subcategory, Category, Location, \
-    Equipment, ActivityData
-from django.contrib.auth.models import User
 
 # Global variable definition
 application = 'import_csv'
@@ -43,6 +38,12 @@ class ImportConfFile(RawConfigParser):
 
 
 def main():
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
+    from django.core.management import execute_from_command_line
+    from ot_logbook.models import Activity, Subcategory, Category, Location, \
+        Equipment, ActivityData
+    from django.contrib.auth.models import User
+
     data = list()
     activity = Activity()
     category = Category()
@@ -278,6 +279,7 @@ def main():
 # =====
 
 if __name__ == '__main__':
+    sys.path.append(os.path.dirname(os.getcwd()))
     main()
     sys.exit(0)
 

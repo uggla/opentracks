@@ -22,11 +22,6 @@ from dateutil.parser import *
 from srtm import *
 from math import floor
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
-from django.core.management import execute_from_command_line
-from ot_logbook.models import Activity, Subcategory, Category, Location, \
-    Equipment, ActivityData
-from django.contrib.auth.models import User
 
 # Global variable definition
 application = 'fix_elevation'
@@ -34,6 +29,11 @@ version = '1.0'
 utc=pytz.utc
 
 def main():
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
+    from django.core.management import execute_from_command_line
+    from ot_logbook.models import Activity, Subcategory, Category, Location, \
+        Equipment, ActivityData
+    from django.contrib.auth.models import User
 
     argparser = argparse.ArgumentParser(description='fix elevation.')
 
@@ -66,6 +66,7 @@ def main():
 # =====
 
 if __name__ == '__main__':
+    sys.path.append(os.path.dirname(os.getcwd()))
     main()
     sys.exit(0)
 
