@@ -22,7 +22,7 @@ from dateutil.parser import *
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'opentracks.settings')
 from django.core.management import execute_from_command_line
-from logbook.models import Activity, Subcategory, Category, Location, \
+from ot_logbook.models import Activity, Subcategory, Category, Location, \
     Equipment, ActivityData
 from django.contrib.auth.models import User
 

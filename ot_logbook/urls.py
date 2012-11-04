@@ -7,6 +7,6 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$',direct_to_template, {'template': 'logbook/index.html'},name='main')
+    url(r'^$',direct_to_template, {'template': 'ot_logbook/index.html'},name='main')
 
 )

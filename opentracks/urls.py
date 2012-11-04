@@ -17,6 +17,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$',include('logbook.urls')),
-    url(r'^logbook/',include('logbook.urls')),
+    url(r'^$',include('ot_logbook.urls')),
+    url(r'^logbook/',include('ot_logbook.urls')),
 )

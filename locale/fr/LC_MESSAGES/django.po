@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-30 23:30+0100\n"
+"POT-Creation-Date: 2012-11-04 17:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,30 +18,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: logbook/models.py:60 logbook/models.py:225
-msgid "event"
-msgstr ""
-
-#: logbook/models.py:96
-msgid "activity start time"
-msgstr ""
-
-#: logbook/models.py:185
-msgid "point timestamp"
-msgstr ""
-
-#: logbook/templates/logbook/base.html:18
-msgid "Website"
-msgstr "Site web"
-
-#: logbook/templates/logbook/index.html:4
-msgid "Main menu"
-msgstr "Menu principal"
-
-#: opentracks/settings.py:174
+#: opentracks/settings.py:185
 msgid "Français"
 msgstr ""
 
-#: opentracks/settings.py:175
+#: opentracks/settings.py:186
 msgid "Anglais"
 msgstr ""
+
+#: ot_logbook/models.py:60 ot_logbook/models.py:225
+msgid "event"
+msgstr ""
+
+#: ot_logbook/models.py:96
+msgid "activity start time"
+msgstr ""
+
+#: ot_logbook/models.py:185
+msgid "point timestamp"
+msgstr ""
+
+#: ot_logbook/templates/ot_logbook/index.html:10
+msgid "Main menu"
+msgstr "Menu principal"
+
+#~ msgid "Website"
+#~ msgstr "Site web"

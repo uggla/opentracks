@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
-from logbook.models import Subcategory, Category, Location, Equipment, EquipmentData, Activity, ActivityData, UserData, Settings
+from ot_logbook.models import Subcategory, Category, Location, Equipment, EquipmentData, Activity, ActivityData, UserData, Settings
 
 class ActivityAdmin(admin.ModelAdmin):
     list_display = ('datetime', 'category', 'subcat', 'location')
