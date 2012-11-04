@@ -20,7 +20,7 @@ from pytz import timezone, all_timezones
 import pytz
 from dateutil.parser import *
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'opentracks.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
 from django.core.management import execute_from_command_line
 from ot_logbook.models import Activity, Subcategory, Category, Location, \
     Equipment, ActivityData

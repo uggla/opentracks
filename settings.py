@@ -120,10 +120,10 @@ MIDDLEWARE_CLASSES = (
 INTERNAL_IPS = ('127.0.0.1',)
 
 
-ROOT_URLCONF = 'opentracks.urls'
+ROOT_URLCONF = 'urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'opentracks.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -176,9 +176,7 @@ LOGGING = {
 }
 
 
-LOCALE_PATHS = (
-    '/home/ctb/django/opentracks/opentracks/locale',
-)
+LOCALE_PATHS = join (OPENTRACKS_ROOT,"locale")
 
 
 LANGUAGES = (

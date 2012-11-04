@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: opentracks/settings.py:185
+#: settings.py:185
 msgid "Français"
 msgstr ""
 
-#: opentracks/settings.py:186
+#: settings.py:186
 msgid "Anglais"
 msgstr ""
 

@@ -22,7 +22,7 @@ from dateutil.parser import *
 from srtm import *
 from math import floor
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'opentracks.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
 from django.core.management import execute_from_command_line
 from ot_logbook.models import Activity, Subcategory, Category, Location, \
     Equipment, ActivityData
