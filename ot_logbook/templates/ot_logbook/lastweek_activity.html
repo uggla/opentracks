@@ -1,0 +1,19 @@
+{% extends "ot_logbook/base.html" %}
+{% load i18n %}
+
+{% block title%}
+    <h1>Opentracks logbook</h1>
+{% endblock %}
+
+{% block trunk%}
+    <h2>{% trans "Last week public activities" %}</h2>
+{% endblock %}
+
+
+{% block tables%}
+    <ul>
+    {% for activity in lastweek %}
+        <li><a href="/logbook/{{ activity.id }}/">{{ activity.datetime }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

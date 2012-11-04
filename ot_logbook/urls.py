@@ -7,6 +7,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$',direct_to_template, {'template': 'ot_logbook/index.html'},name='main')
+    url(r'^$',direct_to_template, {'template': 'ot_logbook/index.html'},name='main'),
+    url(r'^lastweek/$','ot_logbook.views.lastweek_activity',name='lastweek_activity')
 
 )

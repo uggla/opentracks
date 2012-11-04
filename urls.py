@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
-
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -17,6 +18,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$',include('ot_logbook.urls')),
-    url(r'^logbook/',include('ot_logbook.urls')),
+    #url(r'^$',include('ot_logbook.urls')),
+    (r'^$', lambda x: HttpResponseRedirect(reverse('main'))),
+    url(r'^logbook/',include('ot_logbook.urls'),name='main'),
 )
