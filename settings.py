@@ -10,7 +10,9 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-     ('René Ribaud', 'rene.ribaud@free.fr'),
+# Commented to avoid bug described in following ticket.
+# https://code.djangoproject.com/ticket/19172
+#     ('René Ribaud', 'rene.ribaud@free.fr'),
 )
 
 MANAGERS = ADMINS
