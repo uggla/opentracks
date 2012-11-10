@@ -1,170 +1,20 @@
 [
     {
-        "pk": 8, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "activity", 
-            "name": "activity", 
-            "app_label": "logbook"
-        }
-    }, 
-    {
-        "pk": 12, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "activitydata", 
-            "name": "activity data", 
-            "app_label": "logbook"
-        }
-    }, 
-    {
-        "pk": 9, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "category", 
-            "name": "category", 
-            "app_label": "logbook"
-        }
-    }, 
-    {
-        "pk": 4, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "contenttype", 
-            "name": "content type", 
-            "app_label": "contenttypes"
-        }
-    }, 
-    {
-        "pk": 14, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "equipment", 
-            "name": "equipment", 
-            "app_label": "logbook"
-        }
-    }, 
-    {
-        "pk": 15, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "equipmentdata", 
-            "name": "equipment data", 
-            "app_label": "logbook"
-        }
-    }, 
-    {
-        "pk": 2, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "group", 
-            "name": "group", 
-            "app_label": "auth"
-        }
-    }, 
-    {
-        "pk": 11, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "location", 
-            "name": "location", 
-            "app_label": "logbook"
-        }
-    }, 
-    {
-        "pk": 7, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "logentry", 
-            "name": "log entry", 
-            "app_label": "admin"
-        }
-    }, 
-    {
         "pk": 1, 
-        "model": "contenttypes.contenttype", 
+        "model": "auth.user", 
         "fields": {
-            "model": "permission", 
-            "name": "permission", 
-            "app_label": "auth"
-        }
-    }, 
-    {
-        "pk": 5, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "session", 
-            "name": "session", 
-            "app_label": "sessions"
-        }
-    }, 
-    {
-        "pk": 16, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "settings", 
-            "name": "settings", 
-            "app_label": "logbook"
-        }
-    }, 
-    {
-        "pk": 6, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "site", 
-            "name": "site", 
-            "app_label": "sites"
-        }
-    }, 
-    {
-        "pk": 17, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "subcategory", 
-            "name": "subcategory", 
-            "app_label": "logbook"
-        }
-    }, 
-    {
-        "pk": 3, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "user", 
-            "name": "user", 
-            "app_label": "auth"
-        }
-    }, 
-    {
-        "pk": 13, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "userdata", 
-            "name": "user data", 
-            "app_label": "logbook"
-        }
-    }, 
-    {
-        "pk": "38881487b24359c968d72f9ea9ab055f", 
-        "model": "sessions.session", 
-        "fields": {
-            "expire_date": "2012-09-15T16:17:59Z", 
-            "session_data": "MjhlNmI0NDcyMTUxNWZhYTZjYzQ0YTYzNDJjNzU5ODQ2ZGJhZWY1NzqAAn1xAShVEl9hdXRoX3Vz\nZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHED\nVQ1fYXV0aF91c2VyX2lkcQSKAQF1Lg==\n"
-        }
-    }, 
-    {
-        "pk": "9268cf78c8e90c12890138a653b4d776", 
-        "model": "sessions.session", 
-        "fields": {
-            "expire_date": "2012-11-19T19:47:26Z", 
-            "session_data": "OGYzNTZmODE4NjQwMTBhNTc4NTE4NDViNjM1ZTExMGE3YmYzODM4NzqAAn1xAVUKdGVzdGNvb2tp\nZXECVQZ3b3JrZWRxA3Mu\n"
-        }
-    }, 
-    {
-        "pk": 1, 
-        "model": "sites.site", 
-        "fields": {
-            "domain": "example.com", 
-            "name": "example.com"
+            "username": "ctb", 
+            "first_name": "", 
+            "last_name": "", 
+            "is_active": true, 
+            "is_superuser": true, 
+            "is_staff": true, 
+            "last_login": "2012-11-05T19:46:59Z", 
+            "groups": [], 
+            "user_permissions": [], 
+            "password": "pbkdf2_sha256$10000$zJbXS3WA3EgP$EDwB/Btlb0ZN7ACCkiriVxg4dIVFA4RiYbopvo3SevM=", 
+            "email": "uggla@free.fr", 
+            "date_joined": "2012-09-01T12:36:02Z"
         }
     }, 
     {
@@ -209,6 +59,138 @@
         "model": "ot_logbook.location", 
         "fields": {
             "name": "Croix Bayard"
+        }
+    }, 
+    {
+        "pk": 87, 
+        "model": "ot_logbook.equipment", 
+        "fields": {
+            "picture": "", 
+            "expectedlife": null, 
+            "user": 1, 
+            "name": "Lapierre - Ultimate"
+        }
+    }, 
+    {
+        "pk": 88, 
+        "model": "ot_logbook.equipment", 
+        "fields": {
+            "picture": "", 
+            "expectedlife": null, 
+            "user": 1, 
+            "name": "Salomon - GTX II"
+        }
+    }, 
+    {
+        "pk": 418, 
+        "model": "ot_logbook.activity", 
+        "fields": {
+            "datetime": "2012-10-29T18:18:33Z", 
+            "paused": "00:00:00", 
+            "weather": null, 
+            "category": 2, 
+            "removepeak": true, 
+            "temperature": null, 
+            "smoothing": null, 
+            "equipment": 88, 
+            "maxheartrate": 178.990005493164, 
+            "location": 12, 
+            "public": true, 
+            "maxcadence": 0.0, 
+            "user": 1, 
+            "linkto": null, 
+            "averagepower": 0.0, 
+            "averageheartrate": 155.601028442383, 
+            "notes": null, 
+            "climbed": 111.668037414551, 
+            "calories": 866, 
+            "maxpower": 0.0, 
+            "descended": 116.316864013672, 
+            "averagecadence": 0.0
+        }
+    }, 
+    {
+        "pk": 419, 
+        "model": "ot_logbook.activity", 
+        "fields": {
+            "datetime": "2012-11-04T18:06:32Z", 
+            "paused": "00:00:00", 
+            "weather": null, 
+            "category": 2, 
+            "removepeak": true, 
+            "temperature": null, 
+            "smoothing": null, 
+            "equipment": 88, 
+            "maxheartrate": 171.0, 
+            "location": 6, 
+            "public": true, 
+            "maxcadence": 0.0, 
+            "user": 1, 
+            "linkto": null, 
+            "averagepower": 0.0, 
+            "averageheartrate": 146.578475952148, 
+            "notes": null, 
+            "climbed": 194.512161254883, 
+            "calories": 870, 
+            "maxpower": 0.0, 
+            "descended": 99.2708740234375, 
+            "averagecadence": 0.0
+        }
+    }, 
+    {
+        "pk": 420, 
+        "model": "ot_logbook.activity", 
+        "fields": {
+            "datetime": "2012-03-10T14:27:20Z", 
+            "paused": "00:00:00", 
+            "weather": null, 
+            "category": 1, 
+            "removepeak": true, 
+            "temperature": null, 
+            "smoothing": null, 
+            "equipment": 87, 
+            "maxheartrate": 174.578567504883, 
+            "location": 21, 
+            "public": true, 
+            "maxcadence": 0.0, 
+            "user": 1, 
+            "linkto": null, 
+            "averagepower": 0.0, 
+            "averageheartrate": 141.260375976563, 
+            "notes": null, 
+            "climbed": 524.834533691406, 
+            "calories": 1371, 
+            "maxpower": 0.0, 
+            "descended": 512.761901855469, 
+            "averagecadence": 0.0
+        }
+    }, 
+    {
+        "pk": 421, 
+        "model": "ot_logbook.activity", 
+        "fields": {
+            "datetime": "2012-11-02T18:04:11Z", 
+            "paused": "00:00:00", 
+            "weather": null, 
+            "category": 2, 
+            "removepeak": true, 
+            "temperature": null, 
+            "smoothing": null, 
+            "equipment": 88, 
+            "maxheartrate": 177.0, 
+            "location": 12, 
+            "public": false, 
+            "maxcadence": 0.0, 
+            "user": 1, 
+            "linkto": null, 
+            "averagepower": 0.0, 
+            "averageheartrate": 151.480911254883, 
+            "notes": null, 
+            "climbed": 67.3752746582031, 
+            "calories": 527, 
+            "maxpower": 0.0, 
+            "descended": 68.7217407226563, 
+            "averagecadence": 0.0
         }
     }, 
     {
@@ -45169,913 +45151,6 @@
             "lat": 45.2761840820313, 
             "lap": null, 
             "cadence": null
-        }
-    }, 
-    {
-        "pk": 19, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "add_logentry", 
-            "name": "Can add log entry", 
-            "content_type": 7
-        }
-    }, 
-    {
-        "pk": 20, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "change_logentry", 
-            "name": "Can change log entry", 
-            "content_type": 7
-        }
-    }, 
-    {
-        "pk": 21, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "delete_logentry", 
-            "name": "Can delete log entry", 
-            "content_type": 7
-        }
-    }, 
-    {
-        "pk": 4, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "add_group", 
-            "name": "Can add group", 
-            "content_type": 2
-        }
-    }, 
-    {
-        "pk": 5, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "change_group", 
-            "name": "Can change group", 
-            "content_type": 2
-        }
-    }, 
-    {
-        "pk": 6, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "delete_group", 
-            "name": "Can delete group", 
-            "content_type": 2
-        }
-    }, 
-    {
-        "pk": 1, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "add_permission", 
-            "name": "Can add permission", 
-            "content_type": 1
-        }
-    }, 
-    {
-        "pk": 2, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "change_permission", 
-            "name": "Can change permission", 
-            "content_type": 1
-        }
-    }, 
-    {
-        "pk": 3, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "delete_permission", 
-            "name": "Can delete permission", 
-            "content_type": 1
-        }
-    }, 
-    {
-        "pk": 7, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "add_user", 
-            "name": "Can add user", 
-            "content_type": 3
-        }
-    }, 
-    {
-        "pk": 8, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "change_user", 
-            "name": "Can change user", 
-            "content_type": 3
-        }
-    }, 
-    {
-        "pk": 9, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "delete_user", 
-            "name": "Can delete user", 
-            "content_type": 3
-        }
-    }, 
-    {
-        "pk": 10, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "add_contenttype", 
-            "name": "Can add content type", 
-            "content_type": 4
-        }
-    }, 
-    {
-        "pk": 11, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "change_contenttype", 
-            "name": "Can change content type", 
-            "content_type": 4
-        }
-    }, 
-    {
-        "pk": 12, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "delete_contenttype", 
-            "name": "Can delete content type", 
-            "content_type": 4
-        }
-    }, 
-    {
-        "pk": 22, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "add_activity", 
-            "name": "Can add activity", 
-            "content_type": 8
-        }
-    }, 
-    {
-        "pk": 23, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "change_activity", 
-            "name": "Can change activity", 
-            "content_type": 8
-        }
-    }, 
-    {
-        "pk": 24, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "delete_activity", 
-            "name": "Can delete activity", 
-            "content_type": 8
-        }
-    }, 
-    {
-        "pk": 34, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "add_activitydata", 
-            "name": "Can add activity data", 
-            "content_type": 12
-        }
-    }, 
-    {
-        "pk": 35, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "change_activitydata", 
-            "name": "Can change activity data", 
-            "content_type": 12
-        }
-    }, 
-    {
-        "pk": 36, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "delete_activitydata", 
-            "name": "Can delete activity data", 
-            "content_type": 12
-        }
-    }, 
-    {
-        "pk": 25, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "add_category", 
-            "name": "Can add category", 
-            "content_type": 9
-        }
-    }, 
-    {
-        "pk": 26, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "change_category", 
-            "name": "Can change category", 
-            "content_type": 9
-        }
-    }, 
-    {
-        "pk": 27, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "delete_category", 
-            "name": "Can delete category", 
-            "content_type": 9
-        }
-    }, 
-    {
-        "pk": 40, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "add_equipment", 
-            "name": "Can add equipment", 
-            "content_type": 14
-        }
-    }, 
-    {
-        "pk": 41, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "change_equipment", 
-            "name": "Can change equipment", 
-            "content_type": 14
-        }
-    }, 
-    {
-        "pk": 42, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "delete_equipment", 
-            "name": "Can delete equipment", 
-            "content_type": 14
-        }
-    }, 
-    {
-        "pk": 43, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "add_equipmentdata", 
-            "name": "Can add equipment data", 
-            "content_type": 15
-        }
-    }, 
-    {
-        "pk": 44, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "change_equipmentdata", 
-            "name": "Can change equipment data", 
-            "content_type": 15
-        }
-    }, 
-    {
-        "pk": 45, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "delete_equipmentdata", 
-            "name": "Can delete equipment data", 
-            "content_type": 15
-        }
-    }, 
-    {
-        "pk": 31, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "add_location", 
-            "name": "Can add location", 
-            "content_type": 11
-        }
-    }, 
-    {
-        "pk": 32, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "change_location", 
-            "name": "Can change location", 
-            "content_type": 11
-        }
-    }, 
-    {
-        "pk": 33, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "delete_location", 
-            "name": "Can delete location", 
-            "content_type": 11
-        }
-    }, 
-    {
-        "pk": 46, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "add_settings", 
-            "name": "Can add settings", 
-            "content_type": 16
-        }
-    }, 
-    {
-        "pk": 47, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "change_settings", 
-            "name": "Can change settings", 
-            "content_type": 16
-        }
-    }, 
-    {
-        "pk": 48, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "delete_settings", 
-            "name": "Can delete settings", 
-            "content_type": 16
-        }
-    }, 
-    {
-        "pk": 49, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "add_subcategory", 
-            "name": "Can add subcategory", 
-            "content_type": 17
-        }
-    }, 
-    {
-        "pk": 50, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "change_subcategory", 
-            "name": "Can change subcategory", 
-            "content_type": 17
-        }
-    }, 
-    {
-        "pk": 51, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "delete_subcategory", 
-            "name": "Can delete subcategory", 
-            "content_type": 17
-        }
-    }, 
-    {
-        "pk": 37, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "add_userdata", 
-            "name": "Can add user data", 
-            "content_type": 13
-        }
-    }, 
-    {
-        "pk": 38, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "change_userdata", 
-            "name": "Can change user data", 
-            "content_type": 13
-        }
-    }, 
-    {
-        "pk": 39, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "delete_userdata", 
-            "name": "Can delete user data", 
-            "content_type": 13
-        }
-    }, 
-    {
-        "pk": 13, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "add_session", 
-            "name": "Can add session", 
-            "content_type": 5
-        }
-    }, 
-    {
-        "pk": 14, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "change_session", 
-            "name": "Can change session", 
-            "content_type": 5
-        }
-    }, 
-    {
-        "pk": 15, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "delete_session", 
-            "name": "Can delete session", 
-            "content_type": 5
-        }
-    }, 
-    {
-        "pk": 16, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "add_site", 
-            "name": "Can add site", 
-            "content_type": 6
-        }
-    }, 
-    {
-        "pk": 17, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "change_site", 
-            "name": "Can change site", 
-            "content_type": 6
-        }
-    }, 
-    {
-        "pk": 18, 
-        "model": "auth.permission", 
-        "fields": {
-            "codename": "delete_site", 
-            "name": "Can delete site", 
-            "content_type": 6
-        }
-    }, 
-    {
-        "pk": 1, 
-        "model": "auth.user", 
-        "fields": {
-            "username": "ctb", 
-            "first_name": "", 
-            "last_name": "", 
-            "is_active": true, 
-            "is_superuser": true, 
-            "is_staff": true, 
-            "last_login": "2012-11-05T19:46:59Z", 
-            "groups": [], 
-            "user_permissions": [], 
-            "password": "pbkdf2_sha256$10000$zJbXS3WA3EgP$EDwB/Btlb0ZN7ACCkiriVxg4dIVFA4RiYbopvo3SevM=", 
-            "email": "uggla@free.fr", 
-            "date_joined": "2012-09-01T12:36:02Z"
-        }
-    }, 
-    {
-        "pk": 25, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T18:51:10Z", 
-            "object_repr": "UserData object", 
-            "object_id": "2", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 13
-        }
-    }, 
-    {
-        "pk": 24, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 2, 
-            "action_time": "2012-09-01T17:57:22Z", 
-            "object_repr": "Activity object", 
-            "object_id": "3", 
-            "change_message": "Changed public.", 
-            "user": 1, 
-            "content_type": 8
-        }
-    }, 
-    {
-        "pk": 23, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:41:32Z", 
-            "object_repr": "Activity object", 
-            "object_id": "3", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 8
-        }
-    }, 
-    {
-        "pk": 22, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:37:06Z", 
-            "object_repr": "Fontanil", 
-            "object_id": "2", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 11
-        }
-    }, 
-    {
-        "pk": 21, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:36:54Z", 
-            "object_repr": "Voreppe", 
-            "object_id": "1", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 11
-        }
-    }, 
-    {
-        "pk": 20, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:36:25Z", 
-            "object_repr": "Biking", 
-            "object_id": "3", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 9
-        }
-    }, 
-    {
-        "pk": 19, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:36:21Z", 
-            "object_repr": "Offroad", 
-            "object_id": "2", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 17
-        }
-    }, 
-    {
-        "pk": 18, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:36:13Z", 
-            "object_repr": "Biking", 
-            "object_id": "2", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 9
-        }
-    }, 
-    {
-        "pk": 17, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:36:01Z", 
-            "object_repr": "Road", 
-            "object_id": "1", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 17
-        }
-    }, 
-    {
-        "pk": 16, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:35:53Z", 
-            "object_repr": "Biking", 
-            "object_id": "1", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 9
-        }
-    }, 
-    {
-        "pk": 15, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:34:05Z", 
-            "object_repr": "Biking", 
-            "object_id": "2", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 9
-        }
-    }, 
-    {
-        "pk": 14, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:33:59Z", 
-            "object_repr": "Offroad", 
-            "object_id": "2", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 17
-        }
-    }, 
-    {
-        "pk": 13, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:33:41Z", 
-            "object_repr": "Biking", 
-            "object_id": "1", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 9
-        }
-    }, 
-    {
-        "pk": 12, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:33:32Z", 
-            "object_repr": "Road", 
-            "object_id": "1", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 17
-        }
-    }, 
-    {
-        "pk": 11, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:25:44Z", 
-            "object_repr": "Mont Saint Martin", 
-            "object_id": "5", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 11
-        }
-    }, 
-    {
-        "pk": 10, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:25:36Z", 
-            "object_repr": "Chalais", 
-            "object_id": "4", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 11
-        }
-    }, 
-    {
-        "pk": 9, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:25:30Z", 
-            "object_repr": "Voreppe", 
-            "object_id": "3", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 11
-        }
-    }, 
-    {
-        "pk": 8, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:25:25Z", 
-            "object_repr": "Fontanil", 
-            "object_id": "2", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 11
-        }
-    }, 
-    {
-        "pk": 7, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:23:01Z", 
-            "object_repr": "Biking", 
-            "object_id": "2", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 9
-        }
-    }, 
-    {
-        "pk": 6, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:22:54Z", 
-            "object_repr": "Biking", 
-            "object_id": "1", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 9
-        }
-    }, 
-    {
-        "pk": 5, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:22:23Z", 
-            "object_repr": "Downhill", 
-            "object_id": "3", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 17
-        }
-    }, 
-    {
-        "pk": 4, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:22:11Z", 
-            "object_repr": "Offroad", 
-            "object_id": "2", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 17
-        }
-    }, 
-    {
-        "pk": 3, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:22:04Z", 
-            "object_repr": "Road", 
-            "object_id": "1", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 17
-        }
-    }, 
-    {
-        "pk": 2, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:05:27Z", 
-            "object_repr": "Biking", 
-            "object_id": "2", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 9
-        }
-    }, 
-    {
-        "pk": 1, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-09-01T17:05:12Z", 
-            "object_repr": "Biking", 
-            "object_id": "1", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 9
-        }
-    }, 
-    {
-        "pk": 87, 
-        "model": "ot_logbook.equipment", 
-        "fields": {
-            "picture": "", 
-            "expectedlife": null, 
-            "user": 1, 
-            "name": "Lapierre - Ultimate"
-        }
-    }, 
-    {
-        "pk": 88, 
-        "model": "ot_logbook.equipment", 
-        "fields": {
-            "picture": "", 
-            "expectedlife": null, 
-            "user": 1, 
-            "name": "Salomon - GTX II"
-        }
-    }, 
-    {
-        "pk": 418, 
-        "model": "ot_logbook.activity", 
-        "fields": {
-            "datetime": "2012-10-29T18:18:33Z", 
-            "paused": "00:00:00", 
-            "weather": null, 
-            "category": 2, 
-            "removepeak": true, 
-            "temperature": null, 
-            "smoothing": null, 
-            "equipment": 88, 
-            "maxheartrate": 178.990005493164, 
-            "location": 12, 
-            "public": true, 
-            "maxcadence": 0.0, 
-            "user": 1, 
-            "linkto": null, 
-            "averagepower": 0.0, 
-            "averageheartrate": 155.601028442383, 
-            "notes": null, 
-            "climbed": 111.668037414551, 
-            "calories": 866, 
-            "maxpower": 0.0, 
-            "descended": 116.316864013672, 
-            "averagecadence": 0.0
-        }
-    }, 
-    {
-        "pk": 419, 
-        "model": "ot_logbook.activity", 
-        "fields": {
-            "datetime": "2012-11-04T18:06:32Z", 
-            "paused": "00:00:00", 
-            "weather": null, 
-            "category": 2, 
-            "removepeak": true, 
-            "temperature": null, 
-            "smoothing": null, 
-            "equipment": 88, 
-            "maxheartrate": 171.0, 
-            "location": 6, 
-            "public": true, 
-            "maxcadence": 0.0, 
-            "user": 1, 
-            "linkto": null, 
-            "averagepower": 0.0, 
-            "averageheartrate": 146.578475952148, 
-            "notes": null, 
-            "climbed": 194.512161254883, 
-            "calories": 870, 
-            "maxpower": 0.0, 
-            "descended": 99.2708740234375, 
-            "averagecadence": 0.0
-        }
-    }, 
-    {
-        "pk": 420, 
-        "model": "ot_logbook.activity", 
-        "fields": {
-            "datetime": "2012-03-10T14:27:20Z", 
-            "paused": "00:00:00", 
-            "weather": null, 
-            "category": 1, 
-            "removepeak": true, 
-            "temperature": null, 
-            "smoothing": null, 
-            "equipment": 87, 
-            "maxheartrate": 174.578567504883, 
-            "location": 21, 
-            "public": true, 
-            "maxcadence": 0.0, 
-            "user": 1, 
-            "linkto": null, 
-            "averagepower": 0.0, 
-            "averageheartrate": 141.260375976563, 
-            "notes": null, 
-            "climbed": 524.834533691406, 
-            "calories": 1371, 
-            "maxpower": 0.0, 
-            "descended": 512.761901855469, 
-            "averagecadence": 0.0
-        }
-    }, 
-    {
-        "pk": 421, 
-        "model": "ot_logbook.activity", 
-        "fields": {
-            "datetime": "2012-11-02T18:04:11Z", 
-            "paused": "00:00:00", 
-            "weather": null, 
-            "category": 2, 
-            "removepeak": true, 
-            "temperature": null, 
-            "smoothing": null, 
-            "equipment": 88, 
-            "maxheartrate": 177.0, 
-            "location": 12, 
-            "public": false, 
-            "maxcadence": 0.0, 
-            "user": 1, 
-            "linkto": null, 
-            "averagepower": 0.0, 
-            "averageheartrate": 151.480911254883, 
-            "notes": null, 
-            "climbed": 67.3752746582031, 
-            "calories": 527, 
-            "maxpower": 0.0, 
-            "descended": 68.7217407226563, 
-            "averagecadence": 0.0
         }
     }
 ]

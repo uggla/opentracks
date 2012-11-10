@@ -23,7 +23,9 @@ class SimpleTest(TestCase):
         self.assertEqual(2 * 2, 4)
 
 class ActivityTest(TestCase):
-    def test_create_activity(self):
+    fixtures = ['initial_data.json']
+
+    def test_retrieve_activity_data(self):
         """
         Get activity id=418
         Make sure start point is {'lat': 45.2759208679199, 'lon': 5.6514458656311}
