@@ -4,14 +4,17 @@
    contain the root `toctree` directive.
 
 Welcome to opentracks's documentation!
-======================================
+**************************************
 
 Contents:
+   
+ot_logbook application
+======================
 
 .. toctree::
-   :maxdepth: 2
+   :glob:
 
-
+   ot_logbook/*
 
 Indices and tables
 ==================

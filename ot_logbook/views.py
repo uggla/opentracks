@@ -10,6 +10,13 @@ from models import Activity
 from datetime import datetime, date, time, tzinfo, timedelta
 
 def lastweek_activity(request):
+    """Get activities from last 7 days
     
+    :param request: HTTP request parameter
+    :type request: HttpRequest
+
+    :returns: HttpResponse
+    :rtype: HttpPage
+    """
     lastweek = Activity.objects.filter(public = True).filter(datetime__gt = datetime.now()-timedelta(days=7))
     return render(request, 'ot_logbook/lastweek_activity.html', {'lastweek': lastweek})

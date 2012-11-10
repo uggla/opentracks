@@ -126,22 +126,43 @@ class Activity(models.Model):
 
     @staticmethod
     def get_id(req_id):
+        """Get activity values from the DB.
+        
+        :param req_id: Activity id
+        :type req_id: Int
+    
+        :returns: Activity
+        :rtype: Object
+        """
         return Activity.objects.get(pk = req_id)
 
 
-    def loaddata(self):
+    def __loaddata(self):
+        """Load activity data.
+        
+        """
         self.trackpoints = ActivityData.objects.filter(activity = self.pk)
         self.__dataloaded=True
 
     def start(self):
+        """Get acitivty start point latitude and longitude.
+        
+        :returns: lat and lon
+        :rtype: Dictionary.
+        """
         if (self.__dataloaded==False):
-            self.loaddata()
+            self.__loaddata()
         return {'lat' : self.trackpoints[0].lat, 'lon' : self.trackpoints[0].lon}
 
     def speed(self):
+        """Get activity speed points.
+        
+        :returns: Speed points
+        :rtype: List
+        """
         speed=list()
         if (self.__dataloaded==False):
-            self.loaddata()
+            self.__loaddata()
         for i in range(1,self.trackpoints.count()):
             deltadist=self.trackpoints[i].distance - self.trackpoints[i-1].distance
             deltatime=self.trackpoints[i].datetime - self.trackpoints[i-1].datetime
@@ -149,10 +170,20 @@ class Activity(models.Model):
         return speed
 
     def maxspeed(self):
+        """Get activity max speed
+        
+        :returns: Max speed
+        :rtype: Float
+        """
         speed = self.speed()
         return max(speed)
         
     def averagespeed(self):
+        """Get activity average speed
+        
+        :returns: Average speed
+        :rtype: Float
+        """
         elementsum = 0.0
         speed = self.speed()
         nb_elements = len(speed)
@@ -161,8 +192,13 @@ class Activity(models.Model):
         return elementsum/nb_elements
 
     def duration(self):
+        """Get activity duration
+        
+        :returns: Duration
+        :rtype: timedelta
+        """
         if (self.__dataloaded==False):
-            self.loaddata()
+            self.__loaddata()
         i = len(self.trackpoints)-1
         return self.trackpoints[i].datetime - self.trackpoints[0].datetime
         
