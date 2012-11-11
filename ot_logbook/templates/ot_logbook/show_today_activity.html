@@ -1,17 +1,33 @@
 {% extends "ot_logbook/base.html" %}
 {% load i18n %}
 
+{% block onready%}
+$('#date').DatePicker({
+	flat: true,
+	date: '2012-11-11',
+	current: '2012-11-11',
+	calendars: 1,
+	starts: 1
+});
+{% endblock %}
+
+
+
 {% block subtitle%}
     <h2>{% trans "Last week public activities" %}</h2>
 {% endblock %}
 
 {% block trunk%}
+<p id="date"></p>
+
+
+
 {% endblock %}
 
 
 {% block tables%}
     <ul>
-    {% for activity in lastweek %}
+    {% for activity in last3months %}
         <li><a href="/logbook/{{ activity.id }}/">{{ activity.datetime }}</a></li>
     {% endfor %}
     </ul>

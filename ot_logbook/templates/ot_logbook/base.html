@@ -10,8 +10,27 @@
     <link rel="stylesheet" href="/s_media/css/960/960.css" />
     <link rel="stylesheet" href="/s_media/css/960/text.css" />
     <link rel="stylesheet" type="text/css" href="/s_media/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/s_media/css/jquery-ui-1.9.1.custom.min.css" />
+    <link rel="stylesheet" type="text/css" href="/s_media/css/datepicker.css" />
     <script type="text/javascript" src="/s_media/js/jquery-1.7.2.min.js"></script> 
+    <script type="text/javascript" src="/s_media/js/jquery-ui-1.9.1.custom.min.js"></script> 
     <script type="text/javascript" src="/s_media/js/jquery.tablesorter.min.js"></script> 
+    <script type="text/javascript" src="/s_media/js/datepicker.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(OnReady);
+
+        function OnReady(){
+            if (window.console)
+                {
+                console.info("Hello to the console");	
+                }
+
+            {% block onready%}
+            {% endblock %}
+        }
+    </script>
+ 
     {% block script%}
     {% endblock %}
 </head>
@@ -23,8 +42,31 @@
 	{% endblock %}
 	</div>
 
-	<div id="title">
-	{% block title%}
+	<div id="title" class="grid_12">
+		<h1>Opentracks logbook</h1>
+	</div>
+
+	{% block menu%}
+	<div id="menu" class="grid_12">
+		<ul id="menu_level1">
+			<li>
+			<a class="" href="">{% trans "Activity" %}</a>
+				<ul id="menu_activity">
+					<li><a class="" href="{% url show_today_activity %}">{% trans "Show today activity" %}</a></li>
+					<li><a class="" href="">{% trans "List all my activities" %}</a></li>
+				</ul>
+			</li>
+			<li><a class="" href="">{% trans "Equipment" %}</a></li>
+			<li><a class="" href="">{% trans "Athlete" %}</a></li>
+			<li><a class="" href="">{% trans "Training load" %}</a></li>
+			<li><a class="" href="">{% trans "Reports" %}</a></li>
+			<li><a class="" href="">{% trans "Help" %}</a></li>
+		</ul>
+	</div>
+	{% endblock %}
+
+	<div id="subtitle">
+	{% block subtitle%}
 	{% endblock %}
 	</div>
 

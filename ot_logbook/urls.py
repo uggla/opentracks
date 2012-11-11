@@ -8,6 +8,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$',direct_to_template, {'template': 'ot_logbook/index.html'},name='main'),
-    url(r'^lastweek/$','ot_logbook.views.lastweek_activity',name='lastweek_activity')
+    url(r'^activity/lastweek/$','ot_logbook.views.last_week_activity',name='last_week_activity'),
+    url(r'^activity/show_today/$','ot_logbook.views.show_today_activity',name='show_today_activity')
 
 )
