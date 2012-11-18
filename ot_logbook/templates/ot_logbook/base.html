@@ -39,6 +39,12 @@
 
 	<div id="header">
 	{% block header%}
+	    {% if user.is_authenticated %}
+                <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
+                <p><a class="logout" href="{% url logout %}">Logout.</a></p>
+            {% else %}
+                <p>Welcome, new user. Please log in.</p>
+            {% endif %}
 	{% endblock %}
 	</div>
 
@@ -50,7 +56,7 @@
 	<div id="menu" class="grid_12">
 		<ul id="menu_level1">
 			<li>
-			<a class="" href="">{% trans "Activity" %}</a>
+			<a class="" href="{% url activity %}">{% trans "Activity" %}</a>
 				<ul id="menu_activity">
 					<li><a class="" href="{% url show_today_activity %}">{% trans "Show today activity" %}</a></li>
 					<li><a class="" href="">{% trans "List all my activities" %}</a></li>

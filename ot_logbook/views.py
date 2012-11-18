@@ -21,6 +21,7 @@ def last_week_activity(request):
     lastweek = Activity.objects.filter(public = True).filter(datetime__gt = datetime.now()-timedelta(days=7))
     return render(request, 'ot_logbook/lastweek_activity.html', {'lastweek': lastweek})
 
+@login_required
 def show_today_activity(request):
     """Show today activity
     
@@ -30,5 +31,5 @@ def show_today_activity(request):
     :returns: HttpResponse
     :rtype: HttpPage
     """
-    last3months = Activity.objects.filter(public = True)
+    last3months = Activity.objects.filter(public = False).filter(user_id__username = request.user)
     return render(request, 'ot_logbook/show_today_activity.html', {'last3months': last3months})

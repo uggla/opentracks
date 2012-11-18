@@ -20,5 +20,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     #url(r'^$',include('ot_logbook.urls')),
     (r'^$', lambda x: HttpResponseRedirect(reverse('main'))),
-    url(r'^logbook/',include('ot_logbook.urls'),name='main'),
+    url(r'^ot_logbook/',include('ot_logbook.urls'),name='main'),
 )
