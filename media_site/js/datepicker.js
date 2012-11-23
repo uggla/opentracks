@@ -542,6 +542,8 @@
 								switch (options.mode) {
 									case 'multiple':
 										val = (tmp.setHours(0,0,0,0)).valueOf();
+                                                                                //console.info(val);
+                                                                                options.selected=val;
 										if ($.inArray(val, options.date) > -1) {
 											$.each(options.date, function(nr, dat){
 												if (dat == val) {
@@ -598,6 +600,11 @@
 					});
 					return tmp;
 				}
+			},
+			prepareSelectDate = function (options) {
+				var tmp;
+				tmp = new Date(options.selected);
+				return [formatDate(tmp, options.format), tmp, options.el];
 			},
 			getViewport = function () {
 				var m = document.compatMode == 'CSS1Compat';
@@ -820,6 +827,11 @@
 					return prepareDate($('#' + $(this).data('datepickerId')).data('datepicker'))[formated ? 0 : 1];
 				}
 			},
+			getSelectDate: function(formated) {
+				if (this.size() > 0) {
+					return prepareSelectDate($('#' + $(this).data('datepickerId')).data('datepicker'))[formated ? 0 : 1];
+				}
+			},
 			clear: function(){
 				return this.each(function(){
 					if ($(this).data('datepickerId')) {
@@ -851,6 +863,7 @@
 		DatePickerShow: DatePicker.showPicker,
 		DatePickerSetDate: DatePicker.setDate,
 		DatePickerGetDate: DatePicker.getDate,
+		DatePickerGetSelectedDate: DatePicker.getSelectDate,
 		DatePickerClear: DatePicker.clear,
 		DatePickerLayout: DatePicker.fixLayout
 	});

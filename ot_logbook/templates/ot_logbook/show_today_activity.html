@@ -5,11 +5,19 @@
 $('#date').DatePicker({
 	flat: true,
         format: 'Y-m-d',
-	date: ['2012-11-11','2012-11-09'], 
+	//date: ['2012-11-11','2012-11-09',], 
+	date: [{% for activity in myactivity %}'{{ activity.datetime|date:"Y-m-d" }}',{% endfor %}], 
 	current: '2012-11-11',
 	calendars: 4,
         mode: 'multiple',
-	starts: 1
+        //mode: 'single',
+	starts: 1,
+	onChange: function(){
+		console.info($('#date').DatePickerGetDate(true));
+		console.info($('#date').DatePickerGetSelectedDate(true));
+                url = "{% url show_activity 1 %}".replace("1","418");
+                window.location = url;
+	}
 });
 {% endblock %}
 
@@ -28,7 +36,7 @@ $('#date').DatePicker({
 
 {% block tables%}
     <ul>
-    {% for activity in last3months %}
+    {% for activity in myactivity %}
         <li><a href="/logbook/{{ activity.id }}/">{{ activity.datetime }}</a></li>
     {% endfor %}
     </ul>

@@ -1,0 +1,20 @@
+{% extends "ot_logbook/base.html" %}
+{% load i18n %}
+
+
+
+
+{% block subtitle%}
+    <h2>{% trans "Detailed activity" %}</h2>
+{% endblock %}
+
+{% block trunk%}
+<p>Coucou</p>
+
+{% endblock %}
+
+
+{% block tables%}
+{{activity.id}}<br/>
+{{activity.location}}
+{% endblock %}

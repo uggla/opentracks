@@ -31,5 +31,6 @@ def show_today_activity(request):
     :returns: HttpResponse
     :rtype: HttpPage
     """
-    last3months = Activity.objects.filter(public = False).filter(user_id__username = request.user)
-    return render(request, 'ot_logbook/show_today_activity.html', {'last3months': last3months})
+    #last3months = Activity.objects.filter(public = False).filter(user_id__username = request.user)
+    myactivity = Activity.objects.filter(user_id__username = request.user)
+    return render(request, 'ot_logbook/show_today_activity.html', {'myactivity': myactivity})
