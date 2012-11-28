@@ -1,6 +1,61 @@
 {% extends "ot_logbook/base.html" %}
 {% load i18n %}
 
+{% block onready %}
+
+// Initialization
+$('#column_selector_button').button({
+            icons: {
+                primary: "ui-icon-triangle-1-e"
+            },
+        });
+
+$('#column_selector').hide();
+
+$('#column_selector').buttonset();
+
+$(":checkbox").attr("autocomplete", "off");  // Fix firefox reload "bug" http://stackoverflow.com/questions/299811/why-does-the-checkbox-stay-checked-when-reloading-the-page
+
+
+// End initialization
+
+// Manage fields selection
+$('#column_selector_button').click(function(){
+     if($('#column_selector_button').button( "option", "icons" ).primary == "ui-icon-triangle-1-e"){
+         $('#column_selector_button').button( "option", "icons", { primary: "ui-icon-triangle-1-s" } );
+     }else{
+         $('#column_selector_button').button( "option", "icons", { primary: "ui-icon-triangle-1-e" } );
+     }
+     $('#column_selector').toggle("blind");
+     });
+// End manage fields selection
+
+// Datatable
+$('#datatable').dataTable( {
+		    "iDisplayLength": 50,
+                    "sPaginationType": "full_numbers",
+                    "aoColumnDefs": [
+                        {% for field in fields %}
+                            {% if field in visible_fields %}
+                                { "bVisible": true, "aTargets": [ {{ forloop.counter0 }} ] },
+                            {% else %}
+                                { "bVisible": false, "aTargets": [ {{ forloop.counter0 }} ] },
+                            {% endif %}
+                        {% endfor %}
+                    ] } );
+
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+function fnShowHide( iCol )
+	{
+	var oTable = $('#datatable').dataTable();
+	var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
+	oTable.fnSetColumnVis( iCol, bVis ? false : true );
+	}
+</script>
+{% endblock %}
+
 {% block subtitle%}
     <h2>{% trans "Public activities list" %}</h2>
 {% endblock %}
@@ -10,7 +65,27 @@
 
 
 {% block tables%}
-    <table cellpadding="0" cellspacing="0" border="0" class="grid_12" id="datatable" width="100%">
+    <p>
+        <button id="column_selector_button">{% trans "Select columns" %}</button>
+    <div id="column_selector">
+        <p>
+        {% for field in fields %}
+            {% if field in visible_fields %}
+                <input type="checkbox" id="f_{{ forloop.counter0 }}" href="javascript:void(0);" onclick="fnShowHide({{ forloop.counter0 }});" checked/><label for="f_{{ forloop.counter0 }}">{{ field }}</label>
+            {% else %}
+                <input type="checkbox" id="f_{{ forloop.counter0 }}" href="javascript:void(0);" onclick="fnShowHide({{ forloop.counter0 }});"/><label for="f_{{ forloop.counter0 }}">{{ field }}</label>
+            {% endif %}
+        {% endfor %}
+        </p>
+        {% if user.is_authenticated %}
+        <p>
+        <button id="column_selector_savebutton">{% trans "Save visible columns" %}</button>
+	</p>
+        {% endif %}
+    </div>
+    </p>
+
+    <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatable" width="100%">
     <thead><tr>
     {% for field in fields %}
     <th>{{ field }}</th>

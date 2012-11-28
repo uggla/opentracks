@@ -314,14 +314,14 @@ class UserData(models.Model):
         return self.user.username
 
 # Tables Settings
-# units
-class Settings(models.Model):
-    units = models.BooleanField()
+class GlobalSettings(models.Model):
+    key = models.CharField(max_length=1024)
+    value = models.CharField(max_length=1024)
 
-    #def __unicode__(self):
-    #    return self.name
-    
-# 
+class UserSettings(models.Model):
+    user = models.ForeignKey(User)
+    key = models.CharField(max_length=1024)
+    value = models.CharField(max_length=1024)
 
 # Currently unknown fields
 # intensity ?

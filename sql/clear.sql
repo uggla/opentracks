@@ -1,5 +1,6 @@
 BEGIN;
-DROP TABLE `ot_logbook_settings`;
+DROP TABLE `ot_logbook_globalsettings`;
+DROP TABLE `ot_logbook_usersettings`;
 DROP TABLE `ot_logbook_activitydata`;
 DROP TABLE `ot_logbook_activity`;
 DROP TABLE `ot_logbook_category`;

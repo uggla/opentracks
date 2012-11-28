@@ -6,8 +6,9 @@ from django.shortcuts import render, render_to_response, get_object_or_404, get_
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
-from models import Activity
+from models import Activity, GlobalSettings, UserSettings
 from datetime import datetime, date, time, tzinfo, timedelta
+import json
 
 def last_week_activity(request):
     """Get activities from last 7 days
@@ -31,9 +32,18 @@ def public_activities(request):
     :rtype: HttpPage
     """
     activities = Activity.objects.filter(public = True)
-    act = Activity() # Create a activity object to get fields
+    act = Activity() # Create a activity object to get all fields
     fields = act.get_all_fields()
-    return render(request, 'ot_logbook/public_activities.html', {'fields': fields, 'activities': activities})
+    # Get user or global settings regarding fields visible
+    try:
+        visible_fields = UserSettings.objects.get(key = "datatable_activity_fields")
+    except:
+        visible_fields = GlobalSettings.objects.get(key = "datatable_activity_fields")
+
+    vf = visible_fields.value
+    visible_fields = json.loads(vf)
+
+    return render(request, 'ot_logbook/public_activities.html', {'fields': fields, 'activities': activities, 'visible_fields': visible_fields })
 
 @login_required
 def show_today_activity(request):

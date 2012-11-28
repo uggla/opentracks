@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
-from ot_logbook.models import Subcategory, Category, Location, Equipment, EquipmentData, Activity, ActivityData, UserData, Settings
+from ot_logbook.models import Subcategory, Category, Location, Equipment, EquipmentData, Activity, ActivityData, UserData, GlobalSettings, UserSettings
 
 class ActivityAdmin(admin.ModelAdmin):
     list_display = ('datetime', 'category', 'subcat', 'location')
@@ -17,4 +17,5 @@ admin.site.register(EquipmentData)
 admin.site.register(Activity, ActivityAdmin)
 admin.site.register(ActivityData)
 admin.site.register(UserData)
-admin.site.register(Settings)
+admin.site.register(GlobalSettings)
+admin.site.register(UserSettings)
