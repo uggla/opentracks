@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/ot_logbook'},name='logout'),
     url(r'^activity/$','ot_logbook.views.last_week_activity' ,name='activity'),
     url(r'^activity/lastweek/$','ot_logbook.views.last_week_activity',name='last_week_activity'),
+    url(r'^activity/public_activities/$','ot_logbook.views.public_activities',name='public_activities'),
     url(r'^activity/show_today/$','ot_logbook.views.show_today_activity',name='show_today_activity'),
     url(r'^activity/(?P<pk>\d+)/$',
        DetailView.as_view(

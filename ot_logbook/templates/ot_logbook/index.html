@@ -1,12 +1,17 @@
 {% extends "ot_logbook/base.html" %}
 {% load i18n %}
 
-{% block title%}
-    <h1>Opentracks logbook</h1>
-    </ul>
+{% block subtitle%}
+    <h2>{% trans "Welcome" %}</h2>
 {% endblock %}
 
 {% block trunk%}
-    <h2>{% trans "Main menu" %}</h2>
-    </ul>
+<p>
+{% blocktrans %}
+Opentracks bla bla bla.
+Bla bla.
+{% endblocktrans %}
+
+
+</p>
 {% endblock %}

@@ -15,16 +15,51 @@
     <script type="text/javascript" src="/s_media/js/jquery-1.7.2.min.js"></script> 
     <script type="text/javascript" src="/s_media/js/jquery-ui-1.9.1.custom.min.js"></script> 
     <script type="text/javascript" src="/s_media/js/jquery.tablesorter.min.js"></script> 
+    <script type="text/javascript" src="/s_media/js/jquery.dataTables.min.js"></script> 
     <script type="text/javascript" src="/s_media/js/datepicker.js"></script>
+    <script type="text/javascript" src="/s_media/js/raphael-min.js"></script>
+    <script type="text/javascript" src="/s_media/js/g.raphael-min.js"></script>
+    <script type="text/javascript" src="/s_media/js/g.bar-min.js"></script>
+    <script type="text/javascript" src="/s_media/js/g.line-min.js"></script>
+    <script type="text/javascript" src="/s_media/js/g.pie-min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(OnReady);
 
         function OnReady(){
-            if (window.console)
-                {
-                console.info("Hello to the console");	
-                }
+            function debugmsg(type,msg){
+                if (window.console)
+                    {
+                    switch (type)
+		        {
+		    	case "info": console.info(msg);
+				     break;
+		    	case "log": console.log(msg);
+				     break;
+		    	case "debug": console.debug(msg);
+				     break;
+		    	case "warn": console.warn(msg);
+				     break;
+		    	case "error": console.error(msg);
+				     break;
+		    	case "group": console.group(msg);
+				     break;
+		    	case "groupend": console.groupEnd(msg);
+				     break;
+		    	case "count": console.count(msg);
+				     break;
+		        }
+                    }
+            }
+
+            function breakpoint(fn){
+                if (window.console)
+                    {
+			debug(fn);
+		    }
+	    }
+
+	    debugmsg("info","Hello to the console");
 
             {% block onready%}
             {% endblock %}
@@ -58,14 +93,17 @@
 			<li>
 			<a class="" href="{% url activity %}">{% trans "Activity" %}</a>
 				<ul id="menu_activity">
-					<li><a class="" href="{% url show_today_activity %}">{% trans "Show today activity" %}</a></li>
+					<li><a class="" href="{% url public_activities %}">{% trans "List all public activities" %}</a></li>
 					<li><a class="" href="">{% trans "List all my activities" %}</a></li>
+					<li><a class="" href="{% url show_today_activity %}">{% trans "Show today activity" %}</a></li>
 				</ul>
 			</li>
 			<li><a class="" href="">{% trans "Equipment" %}</a></li>
 			<li><a class="" href="">{% trans "Athlete" %}</a></li>
 			<li><a class="" href="">{% trans "Training load" %}</a></li>
 			<li><a class="" href="">{% trans "Reports" %}</a></li>
+			<li><a class="" href="">{% trans "Import / Export" %}</a></li>
+			<li><a class="" href="">{% trans "Settings" %}</a></li>
 			<li><a class="" href="">{% trans "Help" %}</a></li>
 		</ul>
 	</div>

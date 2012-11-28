@@ -21,6 +21,20 @@ def last_week_activity(request):
     lastweek = Activity.objects.filter(public = True).filter(datetime__gt = datetime.now()-timedelta(days=7))
     return render(request, 'ot_logbook/lastweek_activity.html', {'lastweek': lastweek})
 
+def public_activities(request):
+    """Get public activities.
+    
+    :param request: HTTP request
+    :type request: HttpRequest
+
+    :returns: HttpResponse
+    :rtype: HttpPage
+    """
+    activities = Activity.objects.filter(public = True)
+    act = Activity() # Create a activity object to get fields
+    fields = act.get_all_fields()
+    return render(request, 'ot_logbook/public_activities.html', {'fields': fields, 'activities': activities})
+
 @login_required
 def show_today_activity(request):
     """Show today activity
@@ -32,5 +46,5 @@ def show_today_activity(request):
     :rtype: HttpPage
     """
     #last3months = Activity.objects.filter(public = False).filter(user_id__username = request.user)
-    myactivity = Activity.objects.filter(user_id__username = request.user)
-    return render(request, 'ot_logbook/show_today_activity.html', {'myactivity': myactivity})
+    activities = Activity.objects.filter(user_id__username = request.user)
+    return render(request, 'ot_logbook/show_today_activity.html', {'activities': activities})

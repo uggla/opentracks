@@ -117,6 +117,37 @@ class Activity(models.Model):
     trackpoints = QuerySet()
     __dataloaded=False
 
+    
+    def get_all_fields(self):
+        """Get all the fields from activity model.
+        
+        :param req_id: none
+        :type req_id: na
+    
+        :returns: Fields
+        :rtype: List
+        """
+        fields = []
+        for f in self._meta.fields:
+            fields.append(f.name)
+        return(fields)
+    
+    def get_all_fields_values(self):
+        """Get all the fields values from activity model.
+        
+        :param req_id: none
+        :type req_id: na
+    
+        :returns: Fields
+        :rtype: List
+        """
+        values = [] 
+        fields = self.get_all_fields()
+        for f in fields:
+            values.append(getattr(self,f))
+        return(values)
+
+
     def subcat(self):
         return self.category.subcategory.name
     subcat.admin_order_field = 'subcategory'
