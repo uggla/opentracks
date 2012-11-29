@@ -28,6 +28,11 @@ $('#column_selector_button').click(function(){
      }
      $('#column_selector').toggle("blind");
      });
+
+
+$('#column_selector_savebutton').click(get_visible_fields);
+
+
 // End manage fields selection
 
 // Datatable
@@ -43,7 +48,6 @@ $('#datatable').dataTable( {
                             {% endif %}
                         {% endfor %}
                     ] } );
-
 {% endblock %}
 {% block script %}
 <script type="text/javascript">
@@ -52,6 +56,28 @@ function fnShowHide( iCol )
 	var oTable = $('#datatable').dataTable();
 	var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
 	oTable.fnSetColumnVis( iCol, bVis ? false : true );
+	}
+
+function get_visible_fields()
+	{
+        visible_fields = new Array();
+	$('#column_selector input').each(function(index){
+		debugmsg("debug",index);
+		debugmsg("debug",$(this).attr("checked"));
+                if ($(this).attr("checked")=="checked"){
+	  		visible_fields.push($(this).attr("id").replace("f_",""));
+		    }
+
+		});
+	debugmsg("debug",visible_fields);
+        $.post("{% url public_activities %}",{ 'visible_fields' : visible_fields.join(',') },visible_fields_saved,"json");
+        //$.post("{% url public_activities %}");
+	}
+
+function visible_fields_saved(result)
+	{
+	debugmsg("debug","Saved");
+	debugmsg("debug",result);
 	}
 </script>
 {% endblock %}
@@ -71,9 +97,9 @@ function fnShowHide( iCol )
         <p>
         {% for field in fields %}
             {% if field in visible_fields %}
-                <input type="checkbox" id="f_{{ forloop.counter0 }}" href="javascript:void(0);" onclick="fnShowHide({{ forloop.counter0 }});" checked/><label for="f_{{ forloop.counter0 }}">{{ field }}</label>
+                <input type="checkbox" id="f_{{ field }}" href="javascript:void(0);" onclick="fnShowHide({{ forloop.counter0 }});" checked/><label for="f_{{ field }}">{{ field }}</label>
             {% else %}
-                <input type="checkbox" id="f_{{ forloop.counter0 }}" href="javascript:void(0);" onclick="fnShowHide({{ forloop.counter0 }});"/><label for="f_{{ forloop.counter0 }}">{{ field }}</label>
+                <input type="checkbox" id="f_{{ field }}" href="javascript:void(0);" onclick="fnShowHide({{ forloop.counter0 }});"/><label for="f_{{ field }}">{{ field }}</label>
             {% endif %}
         {% endfor %}
         </p>
