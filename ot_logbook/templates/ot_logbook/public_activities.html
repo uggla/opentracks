@@ -2,96 +2,11 @@
 {% load i18n %}
 
 {% block onready %}
-
-// Initialization
-$('#column_selector_button').button({
-            icons: {
-                primary: "ui-icon-triangle-1-e"
-            },
-        });
-
-$('#column_selector').hide();
-
-$('#column_selector').buttonset();
-
-$(":checkbox").attr("autocomplete", "off");  // Fix firefox reload "bug" http://stackoverflow.com/questions/299811/why-does-the-checkbox-stay-checked-when-reloading-the-page
-
-$('#column_selector_saveresult').hide();
-
-// End initialization
-
-// Manage fields selection
-$('#column_selector_button').click(function(){
-     if($('#column_selector_button').button( "option", "icons" ).primary == "ui-icon-triangle-1-e"){
-         $('#column_selector_button').button( "option", "icons", { primary: "ui-icon-triangle-1-s" } );
-     }else{
-         $('#column_selector_button').button( "option", "icons", { primary: "ui-icon-triangle-1-e" } );
-     }
-     $('#column_selector').toggle("blind");
-     });
-
-
-$('#column_selector_savebutton').click(get_visible_fields);
-$('#column_selector_resetbutton').click(reset_visible_fields);
-
-
-// End manage fields selection
-
-// Datatable
-$('#datatable').dataTable( {
-		    "iDisplayLength": 50,
-                    "sPaginationType": "full_numbers",
-                    "aoColumnDefs": [
-                        {% for field in fields %}
-                            {% if field in visible_fields %}
-                                { "bVisible": true, "aTargets": [ {{ forloop.counter0 }} ] },
-                            {% else %}
-                                { "bVisible": false, "aTargets": [ {{ forloop.counter0 }} ] },
-                            {% endif %}
-                        {% endfor %}
-                    ] } );
+{% include "ot_logbook/widget/datatable_onready.html" %}
 {% endblock %}
 
 {% block script %}
-<script type="text/javascript">
-function fnShowHide( iCol )
-	{
-	var oTable = $('#datatable').dataTable();
-	var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
-	oTable.fnSetColumnVis( iCol, bVis ? false : true );
-	}
-
-function get_visible_fields()
-	{
-        visible_fields = new Array();
-	$('#column_selector input').each(function(index){
-                if ($(this).attr("checked")=="checked"){
-	  		visible_fields.push($(this).attr("id").replace("f_",""));
-		    }
-
-		});
-	debugmsg("debug",visible_fields);
-        $.post("{% url public_activities %}",{ 'action' : 'save', 'visible_fields' : visible_fields.join(',') },visible_fields_saved);
-	}
-
-function reset_visible_fields()
-	{
-        $.post("{% url public_activities %}",{ 'action' : 'reset' },visible_fields_reset);
-	}
-
-function visible_fields_saved(result)
-	{
-	debugmsg("debug",result);
-	$('#column_selector_saveresult').show();
-	$('#column_selector_saveresult').toggle('fade','slow');
-	}
-
-function visible_fields_reset(result)
-	{
-	debugmsg("debug",result);
-	window.location.reload();
-	}
-</script>
+{% include "ot_logbook/widget/datatable_script.html" %}
 {% endblock %}
 
 {% block subtitle%}
@@ -103,25 +18,7 @@ function visible_fields_reset(result)
 
 
 {% block tables%}
-    <button id="column_selector_button">{% trans "Select columns" %}</button>
-    <div id="column_selector">
-        {% for field in fields %}
-            {% if field in visible_fields %}
-                <input type="checkbox" id="f_{{ field }}" onclick="fnShowHide({{ forloop.counter0 }});" checked/><label for="f_{{ field }}">{{ field }}</label>
-            {% else %}
-                <input type="checkbox" id="f_{{ field }}" onclick="fnShowHide({{ forloop.counter0 }});"/><label for="f_{{ field }}">{{ field }}</label>
-            {% endif %}
-        {% endfor %}
-        {% if user.is_authenticated %}
-    	<br><br>
-        <button id="column_selector_savebutton">{% trans "Save visible columns" %}</button>
-        <label id="column_selector_saveresult"><b>Saved !</b></label>
-	<br>
-        <button id="column_selector_resetbutton">{% trans "Reset visible columns" %}</button>
-        {% endif %}
-    </div>
-
-    <br><br>
+{% include "ot_logbook/widget/datatable_tableselector.html" %}
     <table class="display" id="datatable">
     <thead><tr>
     {% for field in fields %}

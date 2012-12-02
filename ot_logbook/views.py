@@ -12,6 +12,7 @@ import json
 from django.http import HttpResponse
 from urllib import unquote, quote
 from django.http import Http404
+from dateutil.parser import *
 
 def last_week_activity(request):
     """Get activities from last 7 days
@@ -88,3 +89,20 @@ def show_today_activity(request):
     """
     activities = Activity.objects.filter(user_id__username = request.user)
     return render(request, 'ot_logbook/show_today_activity.html', {'activities': activities, 'now':datetime.now() })
+
+@login_required
+def show_date_activity(request,date):
+    """Show activity by date
+    
+    :param request: HTTP request parameter
+    :type request: HttpRequest
+    :param date : date parameter in Y-m-d format
+    :type request: String
+
+    :returns: HttpResponse
+    :rtype: HttpPage
+    """
+    activities = Activity.objects.filter(user_id__username = request.user)
+    dateobject = parse(date)
+    #print dateobject 
+    return render(request, 'ot_logbook/show_today_activity.html', {'activities': activities, 'now':dateobject })

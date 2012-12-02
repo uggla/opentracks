@@ -1,0 +1,20 @@
+<!-- datatable_table -->
+{% load i18n %}
+    <button id="column_selector_button">{% trans "Select columns" %}</button>
+    <div id="column_selector">
+        {% for field in fields %}
+            {% if field in visible_fields %}
+                <input type="checkbox" id="f_{{ field }}" onclick="fnShowHide({{ forloop.counter0 }});" checked/><label for="f_{{ field }}">{{ field }}</label>
+            {% else %}
+                <input type="checkbox" id="f_{{ field }}" onclick="fnShowHide({{ forloop.counter0 }});"/><label for="f_{{ field }}">{{ field }}</label>
+            {% endif %}
+        {% endfor %}
+        {% if user.is_authenticated %}
+    	<br><br>
+        <button id="column_selector_savebutton">{% trans "Save visible columns" %}</button>
+        <label id="column_selector_saveresult"><b>Saved !</b></label>
+	<br>
+        <button id="column_selector_resetbutton">{% trans "Reset visible columns" %}</button>
+        {% endif %}
+    </div>
+    <br><br>

@@ -2,27 +2,7 @@
 {% load i18n %}
 
 {% block onready%}
-$('#date').DatePicker({
-	flat: true,
-        format: 'Y-m-d',
-	//date: ['2012-11-11','2012-11-09',], 
-	date: [{% for activity in activities %}'{{ activity.datetime|date:"Y-m-d" }}',{% endfor %}], 
-	current: '{{ now|date:"Y-m-d" }}',
-	//current: '2012-12-06',
-	calendars: 4,
-        mode: 'multiple',
-        //mode: 'single',
-	starts: 1,
-	onChange: function(){
-		debugmsg("group","DatePicker onChange");
-		debugmsg("debug",$('#date').DatePickerGetDate(true));
-		debugmsg("debug",$('#date').DatePickerGetSelectedDate(true));
-		debugmsg("groupend","DatePicker onChange");
-                //url = "{% url show_activity 1 %}".replace("1",$('#date').DatePickerGetSelectedDate(true));
-                url = "{% url show_activity 1 %}".replace("1","418");
-                window.location = url;
-	}
-});
+{% include "ot_logbook/widget/datepicker_onready.html" %}
 {% endblock %}
 
 
@@ -32,7 +12,7 @@ $('#date').DatePicker({
 {% endblock %}
 
 {% block trunk%}
-<p id="date"></p>
+<p id="datepicker"></p>
 
 
 {% endblock %}

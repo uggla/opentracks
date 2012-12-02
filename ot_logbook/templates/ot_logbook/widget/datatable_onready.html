@@ -1,0 +1,48 @@
+// datatable_onready
+// Initialization
+$('#column_selector_button').button({
+            icons: {
+                primary: "ui-icon-triangle-1-e"
+            },
+        });
+
+$('#column_selector').hide();
+
+$('#column_selector').buttonset();
+
+$(":checkbox").attr("autocomplete", "off");  // Fix firefox reload "bug" http://stackoverflow.com/questions/299811/why-does-the-checkbox-stay-checked-when-reloading-the-page
+
+$('#column_selector_saveresult').hide();
+
+// End initialization
+
+// Manage fields selection
+$('#column_selector_button').click(function(){
+     if($('#column_selector_button').button( "option", "icons" ).primary == "ui-icon-triangle-1-e"){
+         $('#column_selector_button').button( "option", "icons", { primary: "ui-icon-triangle-1-s" } );
+     }else{
+         $('#column_selector_button').button( "option", "icons", { primary: "ui-icon-triangle-1-e" } );
+     }
+     $('#column_selector').toggle("blind");
+     });
+
+
+$('#column_selector_savebutton').click(get_visible_fields);
+$('#column_selector_resetbutton').click(reset_visible_fields);
+
+
+// End manage fields selection
+
+// Datatable
+$('#datatable').dataTable( {
+		    "iDisplayLength": 50,
+                    "sPaginationType": "full_numbers",
+                    "aoColumnDefs": [
+                        {% for field in fields %}
+                            {% if field in visible_fields %}
+                                { "bVisible": true, "aTargets": [ {{ forloop.counter0 }} ] },
+                            {% else %}
+                                { "bVisible": false, "aTargets": [ {{ forloop.counter0 }} ] },
+                            {% endif %}
+                        {% endfor %}
+                    ] } );

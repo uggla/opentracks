@@ -1,0 +1,40 @@
+<!-- datatable_script -->
+<script type="text/javascript">
+function fnShowHide( iCol )
+	{
+	var oTable = $('#datatable').dataTable();
+	var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
+	oTable.fnSetColumnVis( iCol, bVis ? false : true );
+	}
+
+function get_visible_fields()
+	{
+        visible_fields = new Array();
+	$('#column_selector input').each(function(index){
+                if ($(this).attr("checked")=="checked"){
+	  		visible_fields.push($(this).attr("id").replace("f_",""));
+		    }
+
+		});
+	debugmsg("debug",visible_fields);
+        $.post(window.location.href,{ 'action' : 'save', 'visible_fields' : visible_fields.join(',') },visible_fields_saved);
+	}
+
+function reset_visible_fields()
+	{
+        $.post(window.location.href,{ 'action' : 'reset' },visible_fields_reset);
+	}
+
+function visible_fields_saved(result)
+	{
+	debugmsg("debug",result);
+	$('#column_selector_saveresult').show();
+	$('#column_selector_saveresult').toggle('fade','slow');
+	}
+
+function visible_fields_reset(result)
+	{
+	debugmsg("debug",result);
+	window.location.reload();
+	}
+</script>
