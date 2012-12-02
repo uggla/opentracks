@@ -32,6 +32,7 @@ $('#column_selector_button').click(function(){
 
 
 $('#column_selector_savebutton').click(get_visible_fields);
+$('#column_selector_resetbutton').click(reset_visible_fields);
 
 
 // End manage fields selection
@@ -64,24 +65,31 @@ function get_visible_fields()
 	{
         visible_fields = new Array();
 	$('#column_selector input').each(function(index){
-		debugmsg("debug",index);
-		debugmsg("debug",$(this).attr("checked"));
                 if ($(this).attr("checked")=="checked"){
 	  		visible_fields.push($(this).attr("id").replace("f_",""));
 		    }
 
 		});
 	debugmsg("debug",visible_fields);
-        $.post("{% url public_activities %}",{ 'visible_fields' : visible_fields.join(',') },visible_fields_saved);
-        //$.post("{% url public_activities %}");
+        $.post("{% url public_activities %}",{ 'action' : 'save', 'visible_fields' : visible_fields.join(',') },visible_fields_saved);
+	}
+
+function reset_visible_fields()
+	{
+        $.post("{% url public_activities %}",{ 'action' : 'reset' },visible_fields_reset);
 	}
 
 function visible_fields_saved(result)
 	{
-	debugmsg("debug","Saved");
 	debugmsg("debug",result);
 	$('#column_selector_saveresult').show();
 	$('#column_selector_saveresult').toggle('fade','slow');
+	}
+
+function visible_fields_reset(result)
+	{
+	debugmsg("debug",result);
+	window.location.reload();
 	}
 </script>
 {% endblock %}
@@ -108,6 +116,8 @@ function visible_fields_saved(result)
     	<br><br>
         <button id="column_selector_savebutton">{% trans "Save visible columns" %}</button>
         <label id="column_selector_saveresult"><b>Saved !</b></label>
+	<br>
+        <button id="column_selector_resetbutton">{% trans "Reset visible columns" %}</button>
         {% endif %}
     </div>
 

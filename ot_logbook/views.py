@@ -11,6 +11,7 @@ from datetime import datetime, date, time, tzinfo, timedelta
 import json
 from django.http import HttpResponse
 from urllib import unquote, quote
+from django.http import Http404
 
 def last_week_activity(request):
     """Get activities from last 7 days
@@ -34,10 +35,32 @@ def public_activities(request):
     :rtype: HttpPage
     """
     if request.method == 'POST':
-        toto = request.POST
-        print json.dumps(toto.getlist('visible_fields'))
-        #print toto.getlist('visible_fields')
-        return HttpResponse("OK")
+        req = request.POST
+        if (req.get('action') != 'save' and req.get('action') != 'reset'):
+            raise Http404
+
+        if (req.get('action') == 'save'):
+            visible_fields = req.get('visible_fields')
+            visible_fields = visible_fields.split(',')
+            #print visible_fields
+            try:
+                usersettings = UserSettings.objects.get(key = "datatable_activity_fields")
+            except:
+                usersettings = UserSettings()
+            usersettings.key = "datatable_activity_fields"
+            usersettings.user = request.user
+            usersettings.value = json.dumps(visible_fields)
+            usersettings.save()
+            return HttpResponse("visible fields saved")
+        
+        if (req.get('action') == 'reset'):
+            try:
+                usersettings = UserSettings.objects.get(key = "datatable_activity_fields")
+                usersettings.delete()
+            except:
+                pass
+            return HttpResponse("visible fields reset")
+
     else:
         activities = Activity.objects.filter(public = True)
         act = Activity() # Create a activity object to get all fields
