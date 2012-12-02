@@ -220,6 +220,12 @@
 						if (fromUser.disabled) {
 							data.weeks[indic].days[indic2].classname.push('datepickerDisabled');
 						}
+						if (val == options.realcurrent.valueOf()) {
+							//console.info(val);
+							//console.info(options.realcurrent);
+							//console.info(indic2);
+							data.weeks[indic].days[indic2].classname.push('datepickerCurrent');
+						}
 						if (fromUser.className) {
 							data.weeks[indic].days[indic2].classname.push(fromUser.className);
 						}
@@ -731,9 +737,11 @@
 							options.current = new Date();
 						} else {
 							options.current = parseDate(options.current, options.format);
+							options.realcurrent = parseDate(options.current, options.format);
 						} 
 						options.current.setDate(1);
 						options.current.setHours(0,0,0,0);
+						options.realcurrent.setHours(0,0,0,0);
 						var id = 'datepicker_' + parseInt(Math.random() * 1000), cnt;
 						options.id = id;
 						$(this).data('datepickerId', options.id);

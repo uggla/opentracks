@@ -127,8 +127,14 @@ td.datepickerNotInMonth a {
 tbody.datepickerDays td.datepickerSelected{
 	background: #136A9F;
 }
+tbody.datepickerDays td.datepickerCurrent{
+	background: #DB0000;
+}
 tbody.datepickerDays td.datepickerNotInMonth.datepickerSelected {
 	background: #17384d;
+}
+tbody.datepickerDays td.datepickerNotInMonth.datepickerCurrent {
+	background: #B00000;
 }
 tbody.datepickerYears td.datepickerSelected,
 tbody.datepickerMonths td.datepickerSelected{
