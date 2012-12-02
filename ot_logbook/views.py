@@ -36,46 +36,78 @@ def public_activities(request):
     :rtype: HttpPage
     """
     if request.method == 'POST':
-        req = request.POST
-        if (req.get('action') != 'save' and req.get('action') != 'reset'):
-            raise Http404
-
-        if (req.get('action') == 'save'):
-            visible_fields = req.get('visible_fields')
-            visible_fields = visible_fields.split(',')
-            #print visible_fields
-            try:
-                usersettings = UserSettings.objects.get(key = "datatable_activity_fields")
-            except:
-                usersettings = UserSettings()
-            usersettings.key = "datatable_activity_fields"
-            usersettings.user = request.user
-            usersettings.value = json.dumps(visible_fields)
-            usersettings.save()
-            return HttpResponse("visible fields saved")
-        
-        if (req.get('action') == 'reset'):
-            try:
-                usersettings = UserSettings.objects.get(key = "datatable_activity_fields")
-                usersettings.delete()
-            except:
-                pass
-            return HttpResponse("visible fields reset")
+        msg = __visible_field_save_or_reset(request.POST,request.user)
+        return HttpResponse(msg)
 
     else:
+        fields_data = __provide_fields_data(Activity(),"datatable_activity_fields")
         activities = Activity.objects.filter(public = True)
-        act = Activity() # Create a activity object to get all fields
-        fields = act.get_all_fields()
-        # Get user or global settings regarding fields visible
+
+        return render(request, 'ot_logbook/public_activities.html', {'fields': fields_data["fields"], 'activities': activities, 'visible_fields': fields_data["visible_fields"] })
+
+def __provide_fields_data(model_instance,key):
+    """ Provide fields name and visible fields.
+    
+    :param request: Model instance to do introspection and get fields name.
+    :type request: Model instance
+    :param request: Key used to store visible fields in global or user settings.
+    :type request: String
+
+    :returns: Dictionary containing fields names and visible_fields
+    :rtype: Dictionary key1 : fields, key2 : visible_fields
+    """
+    global UserSettings
+    global GlobalSettings
+    data = {}
+    data["fields"] = model_instance.get_all_fields()
+    # Get user or global settings regarding fields visible
+    try:
+        visible_fields = UserSettings.objects.get(key = key)
+    except:
+        visible_fields = GlobalSettings.objects.get(key = key)
+
+    vf = visible_fields.value
+    data["visible_fields"] = json.loads(vf)
+    return(data)
+
+
+def __visible_field_save_or_reset(req,user):
+    """ Manage ajax post to save or reset column selector
+    
+    :param request: Request
+    :type request: request.POST
+    :param request: User
+    :type request: request.user
+
+    :returns: Message
+    :rtype: String
+    """
+    if (req.get('action') != 'save' and req.get('action') != 'reset'):
+        raise Http404
+
+    if (req.get('action') == 'save'):
+        visible_fields = req.get('visible_fields')
+        visible_fields = visible_fields.split(',')
+        #print visible_fields
         try:
-            visible_fields = UserSettings.objects.get(key = "datatable_activity_fields")
+            usersettings = UserSettings.objects.get(key = "datatable_activity_fields")
         except:
-            visible_fields = GlobalSettings.objects.get(key = "datatable_activity_fields")
+            usersettings = UserSettings()
+        usersettings.key = "datatable_activity_fields"
+        usersettings.user = user
+        usersettings.value = json.dumps(visible_fields)
+        usersettings.save()
+        return ("visible fields saved")
+    
+    if (req.get('action') == 'reset'):
+        try:
+            usersettings = UserSettings.objects.get(key = "datatable_activity_fields")
+            usersettings.delete()
+        except:
+            pass
+        return ("visible fields reset")
 
-        vf = visible_fields.value
-        visible_fields = json.loads(vf)
 
-        return render(request, 'ot_logbook/public_activities.html', {'fields': fields, 'activities': activities, 'visible_fields': visible_fields })
 
 @login_required
 def show_today_activity(request):
@@ -87,8 +119,15 @@ def show_today_activity(request):
     :returns: HttpResponse
     :rtype: HttpPage
     """
-    activities = Activity.objects.filter(user_id__username = request.user)
-    return render(request, 'ot_logbook/show_today_activity.html', {'activities': activities, 'now':datetime.now() })
+    if request.method == 'POST':
+        msg = __visible_field_save_or_reset(request.POST,request.user)
+        return HttpResponse(msg)
+
+    else:
+        fields_data = __provide_fields_data(Activity(),"datatable_activity_fields")
+        activities = Activity.objects.filter(user_id__username = request.user)
+    
+        return render(request, 'ot_logbook/show_today_activity.html', {'activities': activities, 'now':datetime.now(), 'fields': fields_data["fields"], 'visible_fields': fields_data["visible_fields"]  })
 
 @login_required
 def show_date_activity(request,date):
@@ -102,7 +141,14 @@ def show_date_activity(request,date):
     :returns: HttpResponse
     :rtype: HttpPage
     """
-    activities = Activity.objects.filter(user_id__username = request.user)
-    dateobject = parse(date)
-    #print dateobject 
-    return render(request, 'ot_logbook/show_today_activity.html', {'activities': activities, 'now':dateobject })
+    if request.method == 'POST':
+        msg = __visible_field_save_or_reset(request.POST,request.user)
+        return HttpResponse(msg)
+
+    else:
+        fields_data = __provide_fields_data(Activity(),"datatable_activity_fields")
+        activities = Activity.objects.filter(user_id__username = request.user)
+        dateobject = parse(date) # Datetime object comming from url
+        activities_in_table = activities.filter(datetime__gt = dateobject).filter(datetime__lt = dateobject + timedelta(days=1))
+        #print dateobject 
+        return render(request, 'ot_logbook/show_today_activity.html', {'activities': activities, 'now':dateobject, 'fields': fields_data["fields"], 'visible_fields': fields_data["visible_fields"]  })

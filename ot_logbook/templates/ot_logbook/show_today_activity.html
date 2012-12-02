@@ -3,25 +3,47 @@
 
 {% block onready%}
 {% include "ot_logbook/widget/datepicker_onready.html" %}
+{% include "ot_logbook/widget/datatable_onready.html" %}
 {% endblock %}
 
 
+{% block script%}
+{% include "ot_logbook/widget/datatable_script.html" %}
+{% endblock %}
 
 {% block subtitle%}
-    <h2>{% trans "Last week public activities" %}</h2>
+    <h2>{% trans "Show today activities" %}</h2>
 {% endblock %}
 
 {% block trunk%}
 <p id="datepicker"></p>
-
-
 {% endblock %}
 
 
 {% block tables%}
-    <ul>
-    {% for activity in myactivity %}
-        <li><a href="/logbook/{{ activity.id }}/">{{ activity.datetime }}</a></li>
+{% include "ot_logbook/widget/datatable_tableselector.html" %}
+    <table class="display" id="datatable">
+    <thead><tr>
+    {% for field in fields %}
+    <th>{{ field }}</th>
     {% endfor %}
-    </ul>
+    </tr></thead>
+
+    <tbody>
+    {% for activity in activities %}
+        <tr>
+        {% for value in activity.get_all_fields_values %}
+            {% if forloop.counter == 6 %}
+                <td><a href="{% url show_activity activity.id %}">{{ value }}</a></td>
+            {% else %}
+                <td>{{ value }}</td>
+            {% endif %}
+        {% endfor %}
+        </tr>
+    {% empty %}
+        {% trans "There is no public activity." %}
+    {% endfor %}
+    </tbody>
+    </table>
+
 {% endblock %}

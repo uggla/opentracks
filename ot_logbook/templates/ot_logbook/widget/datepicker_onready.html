@@ -12,11 +12,11 @@ $('#datepicker').DatePicker({
 	starts: 1,
 	onChange: function(){
 		debugmsg("group","DatePicker onChange");
-		debugmsg("debug",$('#date').DatePickerGetDate(true));
-		debugmsg("debug",$('#date').DatePickerGetSelectedDate(true));
+		debugmsg("debug",$('#datepicker').DatePickerGetDate(true));
+		debugmsg("debug",$('#datepicker').DatePickerGetSelectedDate(true));
 		debugmsg("groupend","DatePicker onChange");
-                //url = "{% url show_activity 1 %}".replace("1",$('#date').DatePickerGetSelectedDate(true));
-                url = "{% url show_date_activity "2012-01-01" %}".replace("2012-01-01",$('#date').DatePickerGetSelectedDate(true));
+                //url = "{% url show_activity 1 %}".replace("1",$('#datepicker').DatePickerGetSelectedDate(true));
+                url = "{% url show_date_activity "2012-01-01" %}".replace("2012-01-01",$('#datepicker').DatePickerGetSelectedDate(true));
                 window.location = url;
 	}
 });
