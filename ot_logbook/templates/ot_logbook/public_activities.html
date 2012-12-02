@@ -134,7 +134,7 @@ function visible_fields_reset(result)
         <tr>
         {% for value in activity.get_all_fields_values %}
             {% if forloop.counter == 6 %}
-                <td><a href="/logbook/{{ activity.id }}/">{{ value }}</a></td>
+                <td><a href="{% url show_activity activity.id %}">{{ value }}</a></td>
             {% else %}
                 <td>{{ value }}</td>
             {% endif %}
