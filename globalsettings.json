@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "ot_logbook.globalsettings", "fields": {"value": "[\"id\", \"user\", \"category\", \"location\", \"equipment\", \"datetime\"]", "key": "datatable_activity_fields"}}]
