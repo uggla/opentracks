@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 OPENTRACKS_ROOT = dirname(abspath(__file__))
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
