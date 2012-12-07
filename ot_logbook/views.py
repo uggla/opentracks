@@ -13,6 +13,7 @@ from django.http import HttpResponse
 from urllib import unquote, quote
 from django.http import Http404
 from dateutil.parser import *
+from django.utils.timezone import *
 
 def last_week_activity(request):
     """Get activities from last 7 days
@@ -23,7 +24,7 @@ def last_week_activity(request):
     :returns: HttpResponse
     :rtype: HttpPage
     """
-    lastweek = Activity.objects.filter(public = True).filter(datetime__gt = datetime.now()-timedelta(days=7))
+    lastweek = Activity.objects.filter(public = True).filter(datetime__gt = make_aware(datetime.now(),utc)-timedelta(days=7))
     return render(request, 'ot_logbook/lastweek_activity.html', {'lastweek': lastweek})
 
 def public_activities(request):

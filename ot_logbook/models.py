@@ -2,6 +2,7 @@
 from django.db import models
 from django.db.models.query import QuerySet
 from datetime import datetime, date, time, tzinfo, timedelta
+from django.utils.timezone import *
 
 
 from django.contrib.auth.models import User
@@ -166,6 +167,25 @@ class Activity(models.Model):
         :rtype: Object
         """
         return Activity.objects.get(pk = req_id)
+
+    @staticmethod
+    def get_day(day,user=""):
+        """Get daily activities.
+        
+        :param req_id: Day
+        :type req_id: Datetime
+        :param req_id: Optional User
+        :type req_id: String
+    
+        :returns: Activities
+        :rtype: QuerySet
+        """
+	day = make_aware(day,utc)
+        day = day.replace(hour=0,minute=0,second=0)
+        if (user == ""):
+            return Activity.objects.filter(datetime__gte = day).filter(datetime__lt = day + timedelta(days=1))
+        else:
+            return Activity.objects.filter(datetime__gte = day).filter(datetime__lt = day + timedelta(days=1)).filter(user__username = user)
 
 
     def __loaddata(self):
