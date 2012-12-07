@@ -30,7 +30,7 @@
     </tr></thead>
 
     <tbody>
-    {% for activity in activities %}
+    {% for activity in activities_in_table %}
         <tr>
         {% for value in activity.get_all_fields_values %}
             {% if forloop.counter == 6 %}
@@ -41,7 +41,7 @@
         {% endfor %}
         </tr>
     {% empty %}
-        {% trans "There is no public activity." %}
+        {% trans "There is no activity." %}
     {% endfor %}
     </tbody>
     </table>

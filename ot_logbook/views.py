@@ -150,6 +150,6 @@ def show_date_activity(request,date):
         fields_data = __provide_fields_data(Activity(),"datatable_activity_fields")
         activities = Activity.objects.filter(user_id__username = request.user)
         dateobject = parse(date) # Datetime object comming from url
-        activities_in_table = activities.filter(datetime__gte = dateobject).filter(datetime__lt = dateobject + timedelta(days=1))
+        activities_in_table = Activity.get_day(dateobject)
         #print dateobject 
-        return render(request, 'ot_logbook/show_today_activity.html', {'activities': activities, 'now':dateobject, 'fields': fields_data["fields"], 'visible_fields': fields_data["visible_fields"]  })
+        return render(request, 'ot_logbook/show_today_activity.html', {'activities': activities, 'now':dateobject, 'fields': fields_data["fields"], 'visible_fields': fields_data["visible_fields"], 'activities_in_table' : activities_in_table  })
