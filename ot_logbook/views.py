@@ -131,12 +131,14 @@ def show_today_activity(request):
         return render(request, 'ot_logbook/show_today_activity.html', {'activities': activities, 'now':datetime.now(), 'fields': fields_data["fields"], 'visible_fields': fields_data["visible_fields"]  })
 
 @login_required
-def show_date_activity(request,date):
+def show_date_activity(request,date,act="latest"):
     """Show activity by date
     
     :param request: HTTP request parameter
     :type request: HttpRequest
     :param date : date parameter in Y-m-d format
+    :type request: String
+    :param request : Activity id or "latest"
     :type request: String
 
     :returns: HttpResponse
@@ -150,6 +152,6 @@ def show_date_activity(request,date):
         fields_data = __provide_fields_data(Activity(),"datatable_activity_fields")
         activities = Activity.objects.filter(user_id__username = request.user)
         dateobject = parse(date) # Datetime object comming from url
-        activities_in_table = Activity.get_day(dateobject)
+        activities_in_table = Activity.get_day(dateobject,request.user)
         #print dateobject 
         return render(request, 'ot_logbook/show_today_activity.html', {'activities': activities, 'now':dateobject, 'fields': fields_data["fields"], 'visible_fields': fields_data["visible_fields"], 'activities_in_table' : activities_in_table  })

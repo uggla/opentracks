@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     url(r'^activity/lastweek/$','ot_logbook.views.last_week_activity',name='last_week_activity'),
     url(r'^activity/public_activities/$','ot_logbook.views.public_activities',name='public_activities'),
     url(r'^activity/show_today/$','ot_logbook.views.show_today_activity',name='show_today_activity'),
-    url(r'^activity/show_date/(?P<date>\d\d\d\d-\d\d-\d\d)$','ot_logbook.views.show_date_activity',name='show_date_activity'),
+    url(r'^activity/show_date/(?P<date>\d\d\d\d-\d\d-\d\d)/(?P<act>\d+|latest)/$','ot_logbook.views.show_date_activity',name='show_date_activity'),
     url(r'^activity/(?P<pk>\d+)/$',
        DetailView.as_view(
            model=Activity,

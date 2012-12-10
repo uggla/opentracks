@@ -16,7 +16,7 @@ $('#datepicker').DatePicker({
 		debugmsg("debug",$('#datepicker').DatePickerGetSelectedDate(true));
 		debugmsg("groupend","DatePicker onChange");
                 //url = "{% url show_activity 1 %}".replace("1",$('#datepicker').DatePickerGetSelectedDate(true));
-                url = "{% url show_date_activity "2012-01-01" %}".replace("2012-01-01",$('#datepicker').DatePickerGetSelectedDate(true));
+                url = "{% url show_date_activity "2012-01-01" "latest" %}".replace("2012-01-01",$('#datepicker').DatePickerGetSelectedDate(true));
                 window.location = url;
 	}
 });

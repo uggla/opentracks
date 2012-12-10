@@ -138,13 +138,24 @@
 					<li><a class="" href="{% url show_today_activity %}">{% trans "Show today activity" %}</a></li>
 				</ul>
 			</li>
-			<li><a class="" href="">{% trans "Equipment" %}</a></li>
+			<li><a class="" href="">{% trans "Equipment" %}</a>
+				<ul id="menu_equipment">
+					<li><a class="" href="">{% trans "Show my equipment" %}</a></li>
+				</ul>
+			</li>
 			<li><a class="" href="">{% trans "Athlete" %}</a></li>
 			<li><a class="" href="">{% trans "Training load" %}</a></li>
 			<li><a class="" href="">{% trans "Reports" %}</a></li>
 			<li><a class="" href="">{% trans "Import / Export" %}</a></li>
 			<li><a class="" href="">{% trans "Settings" %}</a></li>
-			<li><a class="" href="">{% trans "Help" %}</a></li>
+			<li><a class="" href="">{% trans "Help" %}</a>
+				<ul id="menu_help">
+					<li><a class="" href="">{% trans "About" %}</a></li>
+					<li><a class="" href="">{% trans "Documentation" %}</a></li>
+					<li><a class="" href="">{% trans "Wiki" %}</a></li>
+					<li><a class="" href="">{% trans "Code on github" %}</a></li>
+				</ul>
+			</li>
 		</ul>
 	</div>
 	{% endblock %}
