@@ -5,6 +5,7 @@
 {% include "ot_logbook/widget/datepicker_onready.html" %}
 {% include "ot_logbook/widget/datatable_onready.html" %}
 initmap();
+initchart();
 {% endblock %}
 
 
@@ -13,9 +14,6 @@ initmap();
 
 <script type="text/javascript">
 var map;
-var ajaxRequest;
-var plotlist;
-var plotlayers=[];
 
 function initmap() {
         {% if selected_activity != "" %}
@@ -41,6 +39,33 @@ function initmap() {
         var track = L.polyline(trackcoords).addTo(map);
         {% endif %}
 }
+
+function initchart() {
+        {% if selected_activity != "" %}
+	var r = Raphael("holder",960,480),
+        txtattr = { font: "12px sans-serif" };
+                
+        var x = [], y = [];
+        x=[0,1,2,3];
+	y=[10,12,14,16];
+
+        r.text(470, 10, "Symbols, axis and hover effect").attr(txtattr);
+
+        var lines = r.linechart(20, 20, 920, 440, x, y, { nostroke: false, axis: "0 0 1 1", symbol: "circle", smooth: false }).hoverColumn(function () {
+        this.tags = r.set();
+
+        for (var i = 0, ii = this.y.length; i < ii; i++) {
+            this.tags.push(r.tag(this.x, this.y[i], this.values[i], 160, 10).insertBefore(this).attr([{ fill: "#fff" }, { fill: this.symbols[i].attr("fill") }]));
+        }
+        }, function () {
+            this.tags && this.tags.remove();
+           });
+
+        lines.symbols.attr({ r: 6 });
+
+        {% endif %}
+}
+
 </script>
 {% endblock %}
 
@@ -86,12 +111,16 @@ function initmap() {
     {% if selected_activity != "" %}
 	<div id="activity_details">
         {% trans "Activity" %} {{ selected_activity.id }} {% trans "details :" %}
+	</div>
 
 
 	<div id="map"></div>
-	</div>
+	<br><br>
 
-	
+        <div id="holder"></div>
+
+	<br><br>
+	Bla bla	
 
     {% endif %}
 {% endblock %}
