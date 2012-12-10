@@ -46,12 +46,12 @@ function initchart() {
         txtattr = { font: "12px sans-serif" };
                 
         var x = [], y = [];
-        x=[0,1,2,3];
-	y=[10,12,14,16];
+        x={{ selected_activity.distance }};
+	y={{ selected_activity.speed }};
 
         r.text(470, 10, "Symbols, axis and hover effect").attr(txtattr);
 
-        var lines = r.linechart(20, 20, 920, 440, x, y, { nostroke: false, axis: "0 0 1 1", symbol: "circle", smooth: false }).hoverColumn(function () {
+        var lines = r.linechart(20, 20, 920, 440, x, y, { nostroke: false, axis: "0 0 1 1", smooth: false }).hoverColumn(function () {
         this.tags = r.set();
 
         for (var i = 0, ii = this.y.length; i < ii; i++) {

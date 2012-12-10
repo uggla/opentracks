@@ -240,6 +240,20 @@ class Activity(models.Model):
             speed.append((deltadist / deltatime.total_seconds()) * 3600)
         return speed
 
+
+    def distance(self):
+        """Get activity distance points.
+        
+        :returns: Distance points
+        :rtype: List
+        """
+        distance=list()
+        if (self.__dataloaded==False):
+            self.__loaddata()
+        for i in range(1,self.trackpoints.count()):
+            distance.append(self.trackpoints[i].distance)
+        return distance
+
     def maxspeed(self):
         """Get activity max speed
         
