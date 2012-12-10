@@ -110,25 +110,14 @@ def __visible_field_save_or_reset(req,user):
 
 
 
-@login_required
 def show_today_activity(request):
-    """Show today activity
+    """Call show_date_activity with current day parameters
     
     :param request: HTTP request parameter
     :type request: HttpRequest
-
-    :returns: HttpResponse
-    :rtype: HttpPage
     """
-    if request.method == 'POST':
-        msg = __visible_field_save_or_reset(request.POST,request.user)
-        return HttpResponse(msg)
-
-    else:
-        fields_data = __provide_fields_data(Activity(),"datatable_activity_fields")
-        activities = Activity.objects.filter(user_id__username = request.user)
-    
-        return render(request, 'ot_logbook/show_today_activity.html', {'activities': activities, 'now':datetime.now(), 'fields': fields_data["fields"], 'visible_fields': fields_data["visible_fields"]  })
+    currentday=datetime.now()
+    return (show_date_activity(request,currentday.strftime("%Y-%m-%d"),"latest"))
 
 @login_required
 def show_date_activity(request,date,act="latest"):
@@ -154,4 +143,4 @@ def show_date_activity(request,date,act="latest"):
         dateobject = parse(date) # Datetime object comming from url
         activities_in_table = Activity.get_day(dateobject,request.user)
         #print dateobject 
-        return render(request, 'ot_logbook/show_today_activity.html', {'activities': activities, 'now':dateobject, 'fields': fields_data["fields"], 'visible_fields': fields_data["visible_fields"], 'activities_in_table' : activities_in_table  })
+        return render(request, 'ot_logbook/show_date_activity.html', {'activities': activities, 'now':dateobject, 'fields': fields_data["fields"], 'visible_fields': fields_data["visible_fields"], 'activities_in_table' : activities_in_table  })
