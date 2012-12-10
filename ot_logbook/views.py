@@ -115,6 +115,9 @@ def show_today_activity(request):
     
     :param request: HTTP request parameter
     :type request: HttpRequest
+
+    :returns: HttpResponse
+    :rtype: HttpPage
     """
     currentday=datetime.now()
     return (show_date_activity(request,currentday.strftime("%Y-%m-%d"),"latest"))
@@ -138,9 +141,18 @@ def show_date_activity(request,date,act="latest"):
         return HttpResponse(msg)
 
     else:
-        fields_data = __provide_fields_data(Activity(),"datatable_activity_fields")
-        activities = Activity.objects.filter(user_id__username = request.user)
-        dateobject = parse(date) # Datetime object comming from url
-        activities_in_table = Activity.get_day(dateobject,request.user)
-        #print dateobject 
-        return render(request, 'ot_logbook/show_date_activity.html', {'activities': activities, 'now':dateobject, 'fields': fields_data["fields"], 'visible_fields': fields_data["visible_fields"], 'activities_in_table' : activities_in_table  })
+        fields_data = __provide_fields_data(Activity(),"datatable_activity_fields") # Get table field data
+        activities = Activity.objects.filter(user_id__username = request.user) # Get all activities to fill up datepicker
+        dateobject = parse(date) # Create a datetime object based on parameter comming from url
+        activities_in_table = Activity.get_day(dateobject,request.user) # Get activities to display in table
+
+        # Get the latest activity of the day or the selected one.
+        if (len(activities_in_table) > 0):
+            if (act == 'latest'):
+                selected_activity = Activity.get_id(activities_in_table[len(activities_in_table)-1].id)
+            else:
+                selected_activity = Activity.get_id(act)
+        else:
+            selected_activity = ""
+
+        return render(request, 'ot_logbook/show_date_activity.html', {'activities': activities, 'now':dateobject, 'fields': fields_data["fields"], 'visible_fields': fields_data["visible_fields"], 'activities_in_table' : activities_in_table, 'selected_activity' : selected_activity })

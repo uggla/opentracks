@@ -15,7 +15,7 @@
     <h2>{% trans "Show today activities" %}</h2>
 {% endblock %}
 
-{% block trunk%}
+{% block calendar%}
 <p id="datepicker"></p>
 {% endblock %}
 
@@ -46,4 +46,13 @@
     </tbody>
     </table>
 
+<br><br>
+{% endblock %}
+
+{% block trunk%}
+    {% if selected_activity != "" %}
+
+        {% trans "Activity" %} {{ selected_activity.id }} {% trans "details :" %}
+
+    {% endif %}
 {% endblock %}
