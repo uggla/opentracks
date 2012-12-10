@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models.query import QuerySet
 from datetime import datetime, date, time, tzinfo, timedelta
 from django.utils.timezone import *
+import json
 
 
 from django.contrib.auth.models import User
@@ -197,13 +198,32 @@ class Activity(models.Model):
 
     def start(self):
         """Get acitivty start point latitude and longitude.
-        
-        :returns: lat and lon
+
+        :returns: lat or lon depending of coord
         :rtype: Dictionary.
         """
         if (self.__dataloaded==False):
             self.__loaddata()
         return {'lat' : self.trackpoints[0].lat, 'lon' : self.trackpoints[0].lon}
+
+    def startlat(self):
+        """Get actitivty start point latitude.
+
+        :returns: latitude 
+        :rtype: Float
+        """
+        startpoint=self.start()
+        return(str(startpoint['lat']))
+
+    def startlon(self):
+
+        """Get actitivty start point longitude.
+
+        :returns: longitude 
+        :rtype: Float
+        """
+        startpoint=self.start()
+        return(str(startpoint['lon']))
 
     def speed(self):
         """Get activity speed points.
@@ -253,6 +273,22 @@ class Activity(models.Model):
         i = len(self.trackpoints)-1
         return self.trackpoints[i].datetime - self.trackpoints[0].datetime
         
+    def trackcoords(self):
+        """Get activity track coords
+        
+        :returns: Trackpoint latitude and longitude coords
+        :rtype: json string
+        """
+        if (self.__dataloaded==False):
+            self.__loaddata()
+        
+        tplist = []
+        for tp in self.trackpoints:
+            tpcoord = []
+            tpcoord.append(tp.lat)
+            tpcoord.append(tp.lon)
+            tplist.append(tpcoord)
+        return json.dumps(tplist)
 
 # Table ActivityData
 # activity (FK)

@@ -4,11 +4,44 @@
 {% block onready%}
 {% include "ot_logbook/widget/datepicker_onready.html" %}
 {% include "ot_logbook/widget/datatable_onready.html" %}
+initmap();
 {% endblock %}
 
 
 {% block script%}
 {% include "ot_logbook/widget/datatable_script.html" %}
+
+<script type="text/javascript">
+var map;
+var ajaxRequest;
+var plotlist;
+var plotlayers=[];
+
+function initmap() {
+        {% if selected_activity != "" %}
+	// Set up the map
+	map = new L.Map('map');
+
+	// Create the tile layer with correct attribution
+	var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+	var osmAttrib='Map data © OpenStreetMap contributors';
+	var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});		
+	L.Icon.Default.imagePath = '/s_media/css/images';
+
+	// Start the map center on the first point of our activity
+	map.setView(new L.LatLng({{ selected_activity.startlat }}, {{ selected_activity.startlon }}),12);
+	map.addLayer(osm);
+      
+        // Add startpoint
+	var marker = L.marker([{{ selected_activity.startlat }}, {{ selected_activity.startlon }}]).addTo(map);
+
+	// Add track.
+	var trackcoords = JSON.parse("{{ selected_activity.trackcoords }}");
+        //debugmsg("debug",trackcoords);
+        var track = L.polyline(trackcoords).addTo(map);
+        {% endif %}
+}
+</script>
 {% endblock %}
 
 {% block subtitle%}
@@ -51,8 +84,14 @@
 
 {% block trunk%}
     {% if selected_activity != "" %}
-
+	<div id="activity_details">
         {% trans "Activity" %} {{ selected_activity.id }} {% trans "details :" %}
+
+
+	<div id="map"></div>
+	</div>
+
+	
 
     {% endif %}
 {% endblock %}
