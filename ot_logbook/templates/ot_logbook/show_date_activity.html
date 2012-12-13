@@ -51,17 +51,16 @@ function initchart() {
 
         r.text(470, 10, "Symbols, axis and hover effect").attr(txtattr);
 
-        var lines = r.linechart(20, 20, 920, 440, x, y, { nostroke: false, axis: "0 0 1 1", smooth: false }).hoverColumn(function () {
-        this.tags = r.set();
-
-        for (var i = 0, ii = this.y.length; i < ii; i++) {
-            this.tags.push(r.tag(this.x, this.y[i], this.values[i], 160, 10).insertBefore(this).attr([{ fill: "#fff" }, { fill: this.symbols[i].attr("fill") }]));
-        }
+        var lines = r.linechart(20, 20, 920, 440, x, y, { nostroke: false, axis: "0 0 1 1", smooth: false, symbol:"circle" }).hoverColumn(function () {
+        	this.tags = r.set();
+	        for (var i = 0, ii = this.y.length; i < ii; i++) {
+        	    this.tags.push(r.tag(this.x, this.y[i], this.values[i], 160, 10).insertBefore(this).attr([{ fill: "#fff" }, { fill: this.symbols[i].attr("fill") }]));
+        	}
         }, function () {
             this.tags && this.tags.remove();
-           });
+        });
 
-        lines.symbols.attr({ r: 6 });
+        lines.symbols.attr({ r: 2 });
 
         {% endif %}
 }
