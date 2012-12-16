@@ -9,7 +9,11 @@ Werkzeug==0.8.3
 django-debug-toolbar==0.9.4
 django-extensions==1.0.1
 docutils==0.9.1
+logilab-astng==0.24.1
+logilab-common==0.58.3
 lxml==2.3.6
+numpy==1.6.2
+pylint==0.26.0
 python-dateutil==2.1
 pytz==2012f
 six==1.2.0
