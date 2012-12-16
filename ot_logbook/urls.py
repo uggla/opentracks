@@ -3,7 +3,7 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.simple import direct_to_template
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from models import Activity
+from models import Activity, EquipmentForm
 
 from django.contrib import admin
 admin.autodiscover()
@@ -21,6 +21,6 @@ urlpatterns = patterns('',
        DetailView.as_view(
            model=Activity,
            context_object_name='activity',
-           template_name='ot_logbook/activity_detail.html'),name='show_activity')
-
+           template_name='ot_logbook/activity_detail.html'),name='show_activity'),
+    url(r'^equipment/new/$','ot_logbook.views.new_equipment',name='new_equipment'),
 )

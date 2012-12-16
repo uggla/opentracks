@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.forms import ModelForm
 from django.db.models.query import QuerySet
 from datetime import datetime, date, time, tzinfo, timedelta
 from django.utils.timezone import *
@@ -401,3 +402,8 @@ class UserSettings(models.Model):
 # percent ?
 # laptype ?
 # caloriesconsumed (kcal) ?
+
+class EquipmentForm(ModelForm):
+    class Meta:
+        model = Equipment
+

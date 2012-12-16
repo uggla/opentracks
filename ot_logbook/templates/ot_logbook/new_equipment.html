@@ -1,0 +1,22 @@
+{% extends "ot_logbook/base.html" %}
+{% load i18n %}
+
+
+
+
+{% block subtitle%}
+    <h2>{% trans "Add a new equipment" %}</h2>
+{% endblock %}
+
+{% block trunk%}
+<p>Coucou</p>
+<form action="{% url new_equipment %}" method="post">
+	{% csrf_token %}
+	{{ form.as_ul }}
+	<input type="submit" value="Submit" />
+</form>
+{% endblock %}
+
+
+{% block tables%}
+{% endblock %}

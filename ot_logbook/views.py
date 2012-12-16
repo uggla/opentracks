@@ -6,7 +6,8 @@ from django.shortcuts import render, render_to_response, get_object_or_404, get_
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
-from models import Activity, GlobalSettings, UserSettings
+#from models import Activity, GlobalSettings, UserSettings
+from models import *
 from datetime import datetime, date, time, tzinfo, timedelta
 import json
 from django.http import HttpResponse
@@ -156,3 +157,15 @@ def show_date_activity(request,date,act="latest"):
             selected_activity = ""
 
         return render(request, 'ot_logbook/show_date_activity.html', {'activities': activities, 'now':dateobject, 'fields': fields_data["fields"], 'visible_fields': fields_data["visible_fields"], 'activities_in_table' : activities_in_table, 'selected_activity' : selected_activity })
+
+@login_required()
+def new_equipment(request):
+    #equipment = get_object_or_404(PlayerCharacter, pk=character_id)
+    if request.method == 'POST':
+        form = EquipmentForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('main'))
+    else: 
+        form = EquipmentForm()
+    return render_to_response('ot_logbook/new_equipment.html', { 'form': form },context_instance=RequestContext(request))
