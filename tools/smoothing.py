@@ -34,6 +34,7 @@ class Smoothing:
         smoothing = smoothing_factor
         self.x = x
         self.y = y
+        self.ycorrected =[]
         self.smoothing_segment_list = []
 
         if len(x) != len(y):
@@ -53,32 +54,47 @@ class Smoothing:
                 if seg.startx() < self.x[i] and self.x[i] <= seg.endx():
                     seg.originalx.append(self.x[i])
                     seg.originaly.append(self.y[i])
-   
+
+
+        # Calculate y offset of each segments
         last_known_value=0
         for seg in range(0,len(self.smoothing_segment_list)):
             print "nb of data %f" % len(self.smoothing_segment_list[seg].originalx)
-            if (len(self.smoothing_segment_list[seg].originalx) > 0): # Check if we have values on this segment
-                if (seg == 0):
-                   self.smoothing_segment_list[seg].yoffset  = self.smoothing_segment_list[seg].originaly[0]
-                else:
-                   if (len(self.smoothing_segment_list[seg-1].originalx) > 0): # Do not calculate average if previous segment was empty
-                       self.smoothing_segment_list[seg].yoffset  = self.smoothing_segment_list[seg-1].average()
-                       print "Average : %f" % self.smoothing_segment_list[seg-1].average()
-                       last_known_value = self.smoothing_segment_list[seg-1].average()
-                   else:
-                       self.smoothing_segment_list[seg].yoffset  = last_known_value
-                                      
-            else:
-                if (seg == 0):
+            if (len(self.smoothing_segment_list[seg].originalx) == 0 and seg == 0): # smoothing value is too small, so there are no points in this segment.
                    raise "Smoothing value is too small."
-                else:
-                   if (len(self.smoothing_segment_list[seg-1].originalx) > 0): # Do not calculate average if previous segment was empty
+
+            if (len(self.smoothing_segment_list[seg].originalx) > 0 and seg == 0): # we have values in the segment but this is the first one.
+                   #self.smoothing_segment_list[seg].yoffset  = self.smoothing_segment_list[seg].originaly[0]
+                   self.smoothing_segment_list[seg].yoffset  = (self.smoothing_segment_list[seg].average() - self.smoothing_segment_list[seg].originaly[0])/(self.smoothing_segment_list[seg].endx()-self.smoothing_segment_list[seg].originalx[0])
+                   #self.smoothing_segment_list[seg].yoffset  = 0
+
+            if (seg > 0): # For all non empty segments except the first one.
+                   if (len(self.smoothing_segment_list[seg-1].originalx) > 0): # Do not calculate average if previous segment was empty, this will cause an error.
                        self.smoothing_segment_list[seg].yoffset  = self.smoothing_segment_list[seg-1].average()
                        print "Average : %f" % self.smoothing_segment_list[seg-1].average()
                        last_known_value = self.smoothing_segment_list[seg-1].average()
                    else:
                        self.smoothing_segment_list[seg].yoffset  = last_known_value
-                
+
+        # Calculate gradient for each segment
+        result = []
+        for seg in self.smoothing_segment_list:
+            if (len(seg.originalx) > 0):
+                seg.gradient = (seg.average() - seg.yoffset) / (seg.endx() - seg.startx())
+            else:
+                seg.gradient = 0
+
+
+        # Linear correction of the points
+        result = []
+        for seg in self.smoothing_segment_list:
+            if (len(seg.originalx) > 0):
+                segresult=np.array(seg.originalx)
+                segresult=segresult[:] - seg.startx()
+                segresult=segresult[:] * seg.gradient + seg.yoffset
+                result+=list(segresult)
+        self.ycorrected=result
+            
                 
 
     def __del__(self):
@@ -97,6 +113,7 @@ class SmoothingSegment:
         self.originalx = []
         self.originaly = []
 	self.yoffset=0
+        self.gradient=0	
 
     def get_id(self):
         return self.id
@@ -127,10 +144,10 @@ class point:
 
 class SmoothingTest(unittest.TestCase):
 
-    def setUp(self):
-        self.smooth = Smoothing([1, 2, 3, 4, 9], [10, 20, 30, 40, 40],
-                                2)
-
+#    def setUp(self):
+#        self.smooth = Smoothing([1, 2, 3, 4, 5], [10, 20, 30, 40, 40],
+#                                2)
+#
 #    def test_originalx(self):
 #        self.assertEqual(self.smooth.smoothing_segment_list[0].get_originalx(),
 #                         [1, 2])
@@ -159,16 +176,38 @@ class SmoothingTest(unittest.TestCase):
 #        del self.smooth
 
     def test_offset(self):
+        self.smooth = Smoothing([1, 2, 3, 4, 5], [10, 20, 30, 40, 40], 2)
         print self.smooth.smoothing_segment_list[0].get_originalx()
         print self.smooth.smoothing_segment_list[1].get_originalx()
         print self.smooth.smoothing_segment_list[2].get_originalx()
-        print self.smooth.smoothing_segment_list[3].get_originalx()
-        print self.smooth.smoothing_segment_list[4].get_originalx()
+        #print self.smooth.smoothing_segment_list[3].get_originalx()
+        #print self.smooth.smoothing_segment_list[4].get_originalx()
         print self.smooth.smoothing_segment_list[0].yoffset
         print self.smooth.smoothing_segment_list[1].yoffset
         print self.smooth.smoothing_segment_list[2].yoffset
-        print self.smooth.smoothing_segment_list[3].yoffset
-        print self.smooth.smoothing_segment_list[4].yoffset
+        #print self.smooth.smoothing_segment_list[3].yoffset
+        #print self.smooth.smoothing_segment_list[4].yoffset
+	print self.smooth.ycorrected
+        del self.smooth
+
+    def test_simple_smoothing(self):
+        self.smooth = Smoothing([1, 2, 3, 4, 5], [10, 20, 30, 40, 40], 2)
+        self.assertEqual(self.smooth.smoothing_segment_list[0].get_originalx(), [1, 2])
+        self.assertEqual(self.smooth.smoothing_segment_list[1].get_originalx(), [3, 4])
+        self.assertEqual(self.smooth.smoothing_segment_list[2].get_originalx(), [5])
+        self.assertEqual(self.smooth.smoothing_segment_list[0].get_originaly(), [10, 20])
+        self.assertEqual(self.smooth.smoothing_segment_list[1].get_originaly(), [30, 40])
+        self.assertEqual(self.smooth.smoothing_segment_list[2].get_originaly(), [40])
+        self.assertEqual(self.smooth.smoothing_segment_list[0].startx(), 0)
+        self.assertEqual(self.smooth.smoothing_segment_list[1].startx(), 2)
+        self.assertEqual(self.smooth.smoothing_segment_list[2].startx(), 4)
+        self.assertEqual(self.smooth.smoothing_segment_list[0].endx(), 2)
+        self.assertEqual(self.smooth.smoothing_segment_list[1].endx(), 4)
+        self.assertEqual(self.smooth.smoothing_segment_list[2].endx(), 6)
+        self.assertEqual(self.smooth.smoothing_segment_list[0].average(), 15)
+        self.assertEqual(self.smooth.smoothing_segment_list[1].average(), 35)
+        self.assertEqual(self.smooth.smoothing_segment_list[2].average(), 40)
+        del self.smooth
 
 
 # DEBUG ONLY
