@@ -12,6 +12,7 @@ from math import ceil
 import unittest
 import pprint
 
+# Defined smoothing factor for the entire module.
 smoothing = 0
 
 
@@ -29,20 +30,36 @@ class Smoothing:
     :rtype: HttpPage
     """
 
-    def __init__(self, x, y, smoothing_factor,):
+    def __init__(self,smoothing_factor, x = [], y = [], debug = False):
         global smoothing
         smoothing = smoothing_factor
         self.x = x
         self.y = y
-        self.ycorrected =[]
+        self.__debug = debug
+
+        @property
+        def debug(self):
+            return self.__debug
+        @debug.setter
+        def debug(self, value):
+            self.__debug = value
+
+        @property
+        def ycorrected(self):
+            return self.__ycorrected
+        self.ycorrected = []
+
         self.smoothing_segment_list = []
 
-        if len(x) != len(y):
-            raise 'Provided lists have not the same size.'
 
-        self.calculate()
+        if (len(self.x) > 0):
+            self.calculate()
 
     def calculate(self):
+        print self.smoothing_segment_list
+        if len(self.x) != len(self.y):
+            raise Exception('Provided lists have not the same size.')
+
         nbseg = ceil(self.x[len(self.x) - 1] / float(smoothing))
         for seg in range(int(nbseg)):
             self.smoothing_segment_list.append(SmoothingSegment())
@@ -94,14 +111,16 @@ class Smoothing:
                 segresult=segresult[:] * seg.gradient + seg.yoffset
                 result+=list(segresult)
         self.ycorrected=result
+
+        if (self.__debug != True):
+            self.__cleanup_segment_list()
             
                 
+    def __cleanup_segment_list(self):
+        del(self.smoothing_segment_list[:])
 
     def __del__(self):
-        for smoothing_segment in self.smoothing_segment_list:
-            self.smoothing_segment_list.remove(smoothing_segment)
-            del smoothing_segment
-
+        self.__cleanup_segment_list()
 
 class SmoothingSegment:
 
@@ -144,54 +163,8 @@ class point:
 
 class SmoothingTest(unittest.TestCase):
 
-#    def setUp(self):
-#        self.smooth = Smoothing([1, 2, 3, 4, 5], [10, 20, 30, 40, 40],
-#                                2)
-#
-#    def test_originalx(self):
-#        self.assertEqual(self.smooth.smoothing_segment_list[0].get_originalx(),
-#                         [1, 2])
-#        self.assertEqual(self.smooth.smoothing_segment_list[1].get_originalx(),
-#                         [3, 4])
-#        self.assertEqual(self.smooth.smoothing_segment_list[2].get_originalx(),
-#                         [5])
-#        del self.smooth
-#
-#    def test_originaly(self):
-#        self.assertEqual(self.smooth.smoothing_segment_list[0].get_originaly(),
-#                         [10, 20])
-#        self.assertEqual(self.smooth.smoothing_segment_list[1].get_originaly(),
-#                         [30, 40])
-#        self.assertEqual(self.smooth.smoothing_segment_list[2].get_originaly(),
-#                         [40])
-#        del self.smooth
-#
-#    def test_average(self):
-#        self.assertEqual(self.smooth.smoothing_segment_list[0].average(),
-#                         float(15))
-#        self.assertEqual(self.smooth.smoothing_segment_list[1].average(),
-#                         float(35))
-#        self.assertEqual(self.smooth.smoothing_segment_list[2].average(),
-#                         float(40))
-#        del self.smooth
-
-    def test_offset(self):
-        self.smooth = Smoothing([1, 2, 3, 4, 5], [10, 20, 30, 40, 40], 2)
-        print self.smooth.smoothing_segment_list[0].get_originalx()
-        print self.smooth.smoothing_segment_list[1].get_originalx()
-        print self.smooth.smoothing_segment_list[2].get_originalx()
-        #print self.smooth.smoothing_segment_list[3].get_originalx()
-        #print self.smooth.smoothing_segment_list[4].get_originalx()
-        print self.smooth.smoothing_segment_list[0].yoffset
-        print self.smooth.smoothing_segment_list[1].yoffset
-        print self.smooth.smoothing_segment_list[2].yoffset
-        #print self.smooth.smoothing_segment_list[3].yoffset
-        #print self.smooth.smoothing_segment_list[4].yoffset
-	print self.smooth.ycorrected
-        del self.smooth
-
-    def test_simple_smoothing(self):
-        self.smooth = Smoothing([1, 2, 3, 4, 5], [10, 20, 30, 40, 40], 2)
+    def test_simple_internal_smoothing(self):
+        self.smooth = Smoothing(2, [1, 2, 3, 4, 5], [10, 20, 30, 40, 40],True)
         self.assertEqual(self.smooth.smoothing_segment_list[0].get_originalx(), [1, 2])
         self.assertEqual(self.smooth.smoothing_segment_list[1].get_originalx(), [3, 4])
         self.assertEqual(self.smooth.smoothing_segment_list[2].get_originalx(), [5])
@@ -207,8 +180,38 @@ class SmoothingTest(unittest.TestCase):
         self.assertEqual(self.smooth.smoothing_segment_list[0].average(), 15)
         self.assertEqual(self.smooth.smoothing_segment_list[1].average(), 35)
         self.assertEqual(self.smooth.smoothing_segment_list[2].average(), 40)
+        self.assertEqual(self.smooth.smoothing_segment_list[0].yoffset, 5)
+        self.assertEqual(self.smooth.smoothing_segment_list[1].yoffset, 15)
+        self.assertEqual(self.smooth.smoothing_segment_list[2].yoffset, 35)
+        self.assertEqual(self.smooth.smoothing_segment_list[0].gradient, 5)
+        self.assertEqual(self.smooth.smoothing_segment_list[1].gradient, 10)
+        self.assertEqual(self.smooth.smoothing_segment_list[2].gradient, 2.5)
+        self.assertEqual(self.smooth.ycorrected, [10.0, 15.0, 25.0, 35.0, 37.5])
         del self.smooth
 
+    def test_simple_smoothing(self):
+        self.smooth = Smoothing(2, [1, 2, 3, 4, 5], [10, 20, 30, 40, 40])
+        self.assertEqual(self.smooth.ycorrected, [10.0, 15.0, 25.0, 35.0, 37.5])
+        del self.smooth
+
+    def test_simple_smoothing_twice_1(self):
+        self.smooth = Smoothing(2, [1, 2, 3, 4, 5], [10, 20, 30, 40, 40])
+        self.assertEqual(self.smooth.ycorrected, [10.0, 15.0, 25.0, 35.0, 37.5])
+        self.smooth.calculate()
+        self.assertEqual(self.smooth.ycorrected, [10.0, 15.0, 25.0, 35.0, 37.5])
+        del self.smooth
+
+    def test_simple_smoothing_twice_2(self):
+        self.smooth = Smoothing(2, [1, 2, 3, 4, 5], [10, 20, 30, 40, 40])
+        self.assertEqual(self.smooth.ycorrected, [10.0, 15.0, 25.0, 35.0, 37.5])
+        self.smooth = Smoothing(2, [1, 2, 3, 4, 5], [10, 20, 30, 40, 40])
+        self.assertEqual(self.smooth.ycorrected, [10.0, 15.0, 25.0, 35.0, 37.5])
+        del self.smooth
+ 
+    def test_smoothing_list_size_error(self):
+        with self.assertRaises(Exception) as context:
+            Smoothing(2, [1, 2, 3, 4, 5,6], [10, 20, 30, 40, 40])
+        self.assertEqual(context.exception.message, 'Provided lists have not the same size.')
 
 # DEBUG ONLY
 
