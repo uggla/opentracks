@@ -38,7 +38,7 @@ class Smoothing:
         self.__debug = debug
 
         @property
-        def debug(self):
+        def debug(self):   # Used for testing internal behavior
             return self.__debug
         @debug.setter
         def debug(self, value):
@@ -56,8 +56,11 @@ class Smoothing:
             self.calculate()
 
     def calculate(self):
-        print self.smoothing_segment_list
-        if len(self.x) != len(self.y):
+
+        if (len(self.x) == 0):
+            raise Exception('Provided lists have no value.')
+
+        if (len(self.x) != len(self.y)):
             raise Exception('Provided lists have not the same size.')
 
         nbseg = ceil(self.x[len(self.x) - 1] / float(smoothing))
@@ -121,6 +124,14 @@ class Smoothing:
 
     def __del__(self):
         self.__cleanup_segment_list()
+
+    def add_point(self,x,y):
+        if not (isinstance(x, (float,long,int))):
+            raise Exception('x must be an int, long or float')
+        if not (isinstance(y, (float,long,int))):
+            raise Exception('y must be an int, long or float')
+        self.x.append(x)
+        self.y.append(y)
 
 class SmoothingSegment:
 
@@ -212,6 +223,16 @@ class SmoothingTest(unittest.TestCase):
         with self.assertRaises(Exception) as context:
             Smoothing(2, [1, 2, 3, 4, 5,6], [10, 20, 30, 40, 40])
         self.assertEqual(context.exception.message, 'Provided lists have not the same size.')
+
+    def test_smoothing_list_empty_error(self):
+        with self.assertRaises(Exception) as context:
+            self.smooth = Smoothing(2, [], [])
+            self.smooth.calculate()
+        self.assertEqual(context.exception.message, 'Provided lists have no value.')
+
+    def test_smoothing_add_point(self):
+            self.smooth = Smoothing(4)
+            self.smooth.add_point(1.0,15.0) 
 
 # DEBUG ONLY
 
